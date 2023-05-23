@@ -3,7 +3,7 @@ package Entidades;
 import java.util.ArrayList;
 
 public class DadoCustomizadoTeste extends DadoCustomizado {
-    private ResultadoTeste resultado = new ResultadoTeste();
+    private ResultadoTeste resultado;
 
     public DadoCustomizadoTeste(){
         this.tipo = "Teste";
