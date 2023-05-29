@@ -161,6 +161,10 @@ public class Principal {
 			System.out.print(pasta.getDadosPasta().get(i).getTipo() + " | ");
 			System.out.println(pasta.getDadosPasta().get(i).getTeste().getQuantidade() + "D20 ]");
 		}
+		
+		System.out.println("////////////////////////////////////////");
+		
+		System.out.println(pasta.getDadosPasta().get(1).getNome() + " " + pasta.getDadosPasta().get(1).rolarDado());
 	}
 
 }
