@@ -85,6 +85,7 @@ public class Principal {
 		System.out.println(testeATK.getCritico().getMargem() + " / x" + testeATK.getCritico().getMultiplicador());
 		if(testeATK.getResultado().verificarCritico()) {
 			System.out.println("Crítico!");
+			testeATK.getDano().rolarDanoCritico();
 			System.out.println();
 			for(int i = 0; i < testeATK.getDano().getDados().size(); i++) {
 				if(i == (testeATK.getDano().getDados().size() - 1)) {
@@ -93,14 +94,17 @@ public class Principal {
 					System.out.print((testeATK.getDano().getDados().get(i).getQuantidade() * testeATK.getCritico().getMultiplicador()) + "D" + testeATK.getDano().getDados().get(i).getFaces() + " + ");
 				}
 			}
-			testeATK.getDano().rolarDanoCritico();
-			danoTotal = 0;
-			for(int i = 0; i < testeATK.getDano().getRolagemDano().get(0).getDanos().size(); i++) {
-				for(int j = 0; j < testeATK.getDano().getRolagemDano().size(); j++) {
-					danoTotal += testeATK.getDano().getRolagemDano().get(j).getDanos().get(i);
+			for(int i = 0; i < testeATK.getDano().getRolagemDano().size(); i++) {
+				for(int j = 0; j < testeATK.getDano().getRolagemDano().get(i).getDanos().size(); j++) {
+					danoTotal += testeATK.getDano().getRolagemDano().get(i).getDanos().get(j);
 				}
 			}
-			System.out.println(testeATK.getDano().getRolagemDano().get(0).getDanos() + " = " + danoTotal);
+			for(int i = 0; i < testeATK.getDano().getRolagemDano().size(); i++) {
+				System.out.print(testeATK.getDano().getRolagemDano().get(i).getDadoUsado());
+				System.out.print(testeATK.getDano().getRolagemDano().get(i).getDanos());
+				System.out.print(" / ");
+			}
+			System.out.println("= " + danoTotal);
 		} else {
 			System.out.println();
 			testeATK.getDano().rolarDano();
@@ -112,10 +116,17 @@ public class Principal {
 					System.out.print(testeATK.getDano().getDados().get(i).getQuantidade() + "D" + testeATK.getDano().getDados().get(i).getFaces() + " + ");
 				}
 			}
-			for(int i = 0; i < testeATK.getDano().getRolagemDano().get(0).getDanos().size(); i++) {
-				danoTotal += testeATK.getDano().getRolagemDano().get(0).getDanos().get(i);
+			for(int i = 0; i < testeATK.getDano().getRolagemDano().size(); i++) {
+				for(int j = 0; j < testeATK.getDano().getRolagemDano().get(i).getDanos().size(); j++) {
+					danoTotal += testeATK.getDano().getRolagemDano().get(i).getDanos().get(j);
+				}
 			}
-			System.out.println(testeATK.getDano().getRolagemDano().get(0).getDanos() + " = " + danoTotal);
+			for(int i = 0; i < testeATK.getDano().getRolagemDano().size(); i++) {
+				System.out.print(testeATK.getDano().getRolagemDano().get(i).getDadoUsado());
+				System.out.print(testeATK.getDano().getRolagemDano().get(i).getDanos());
+				System.out.print(" / ");
+			}
+			System.out.println("= " + danoTotal);
 		}
 		int danoFinal = danoTotal;
 		for(int i = 0; i < testeATK.getDano().getFixos().size(); i++){

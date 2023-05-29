@@ -51,7 +51,7 @@ public class Dano {
 	}
 
 	public ArrayList<RolagemDano> rolarDano(){
-		rolagemDano = new ArrayList<RolagemDano>();
+		this.rolagemDano = new ArrayList<RolagemDano>();
 		ArrayList<Integer> danoCausado = new ArrayList<Integer>();
         Random random = new Random();
 
@@ -62,16 +62,17 @@ public class Dano {
             }
         	String nome = this.getDados().get(i).getClass().getSimpleName();
         	RolagemDano dice = new RolagemDano(nome, danoCausado);
-        	rolagemDano.add(dice);
+        	danoCausado = new ArrayList<Integer>();
+        	this.rolagemDano.add(dice);
         }
-        return rolagemDano;
+        return this.rolagemDano;
 	}
     
 	public ArrayList<RolagemDano> rolarDanoCritico(){
 		rolagemDano = new ArrayList<RolagemDano>();
 		ArrayList<Integer> danoCausado = new ArrayList<Integer>();
         Random random = new Random();
-
+        
         for(int i = 0; i < this.getDados().size(); i++) {
         	for(int j = 0; j < (this.getDados().get(i).getQuantidade() * this.critico.getMultiplicador()); j++){
                 int valor = random.nextInt(this.getDados().get(i).getFaces()) + 1;
@@ -79,8 +80,9 @@ public class Dano {
             }
         	String nome = this.getDados().get(i).getClass().getSimpleName();
         	RolagemDano dice = new RolagemDano(nome, danoCausado);
-        	rolagemDano.add(dice);
+        	danoCausado = new ArrayList<Integer>();
+        	this.rolagemDano.add(dice);
         }
-        return rolagemDano;	
+        return this.rolagemDano;
 	}
 }
