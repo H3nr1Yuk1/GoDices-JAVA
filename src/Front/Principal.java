@@ -7,10 +7,12 @@ import Entidades.D10;
 import Entidades.D20;
 import Entidades.D8;
 import Entidades.Dado;
+import Entidades.DadoCustomizado;
 import Entidades.DadoCustomizadoAtaque;
 import Entidades.DadoCustomizadoTeste;
 import Entidades.Dano;
 import Entidades.Modificador;
+import Entidades.PastaDados;
 
 public class Principal {
 	public static void main(String[] args) {
@@ -135,7 +137,30 @@ public class Principal {
 		}
 		System.out.println("Dano: " + danoFinal);
 		
+		System.out.println("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
 		
+		
+		
+		// Teste com a pasta de dados
+
+		
+		
+		PastaDados pasta = new PastaDados("Pastinha Legal");
+		
+		ArrayList<DadoCustomizado> dadinhos = new ArrayList<DadoCustomizado>();
+		
+		dadinhos.add(testeATK);
+		dadinhos.add(teste2);
+		
+		pasta.setDadosPasta(dadinhos);
+		
+		System.out.println("Pasta: " + pasta.getNomePasta());
+		System.out.println("Dados: ");
+		for(int i = 0; i < pasta.getDadosPasta().size(); i++) {
+			System.out.print("[" + pasta.getDadosPasta().get(i).getNome() + " | ");
+			System.out.print(pasta.getDadosPasta().get(i).getTipo() + " | ");
+			System.out.println(pasta.getDadosPasta().get(i).getTeste().getQuantidade() + "D20 ]");
+		}
 	}
 
 }
