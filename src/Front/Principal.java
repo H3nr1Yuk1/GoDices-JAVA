@@ -14,6 +14,8 @@ import Entidades.Dano;
 import Entidades.Modificador;
 import Entidades.PastaDados;
 
+import Persistencia.Persistencia;
+
 public class Principal {
 	public static void main(String[] args) {
 		
@@ -142,10 +144,14 @@ public class Principal {
 		
 		
 		// Teste com a pasta de dados
-
 		
+		PastaDados pasta = new PastaDados("Teste zero");
 		
-		PastaDados pasta = new PastaDados("Pastinha Legal");
+		Persistencia.criarPasta(pasta);
+		
+		pasta.setNomePasta("Teste zero zero");
+		
+		Persistencia.atualizarPasta(pasta);
 		
 		ArrayList<DadoCustomizado> dadinhos = new ArrayList<DadoCustomizado>();
 		
@@ -153,6 +159,8 @@ public class Principal {
 		dadinhos.add(teste2);
 		
 		pasta.setDadosPasta(dadinhos);
+		
+		
 		
 		System.out.println("Pasta: " + pasta.getNomePasta());
 		System.out.println("Dados: ");
@@ -165,6 +173,10 @@ public class Principal {
 		System.out.println("////////////////////////////////////////");
 		
 		System.out.println(pasta.getDadosPasta().get(1).getNome() + " " + pasta.getDadosPasta().get(1).rolarDado());
+		
+		
+		
+		
 	}
 
 }

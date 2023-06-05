@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+//@Entity
 public class DadoCustomizadoTeste extends DadoCustomizado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

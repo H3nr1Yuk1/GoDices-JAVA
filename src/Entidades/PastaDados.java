@@ -28,6 +28,14 @@ public class PastaDados {
 		this.nomePasta = nomePasta;
 		this.dadosPasta = dadosPasta;
 	}
+    
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getNomePasta() {
 		return nomePasta;
