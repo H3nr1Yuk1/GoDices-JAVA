@@ -51,7 +51,7 @@ public class Persistencia {
     	try {
     		EntityManager manager = EntityManagerFactory.getInstance();
     		manager.getTransaction().begin();
-    		Query proq = manager.createQuery("from PASTADADOS where id = :param");
+    		Query proq = manager.createQuery("from PastaDados where id = :param");
     		proq.setParameter("param", pasta.getId());
     		
     		List<PastaDados> pastas = proq.getResultList();

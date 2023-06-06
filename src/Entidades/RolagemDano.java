@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//@Entity
+@Entity
 public class RolagemDano {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,15 @@ public class RolagemDano {
 		this.dadoUsado = dadoUsado;
 		this.danos = danos;
 	}
-	
+		
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getDadoUsado() {
 		return dadoUsado;
 	}
