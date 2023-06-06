@@ -25,12 +25,7 @@ public class RolagemDanoPersistencia {
     	try {
     		EntityManager manager = EntityManagerFactory.getInstance();
     		manager.getTransaction().begin();
-    		manager.merge(rolagem);
-    		
-    		//RolagemDano entidade = manager.find(RolagemDano.class, rolagem.getId());
-    		//entidade.setDadoUsado(rolagem.getDadoUsado());
-    		//entidade.setDanos(rolagem.getDanos());
-    		
+    		manager.persist(rolagem);    		
     		manager.getTransaction().commit();
     		
     		return true;
