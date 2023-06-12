@@ -179,26 +179,6 @@ public class Principal {
 		
 		*/
 		
-		RolagemDano danoCausado = new RolagemDano();
-		RolagemDanoPersistencia.criarRolagemDano(danoCausado);
-		System.out.println("X-X-X-X-X");
-		danoCausado.setDadoUsado("D10");
-		ArrayList<Integer> danos = new ArrayList<Integer>();
-		danos.add(1);
-		danos.add(7);
-		danos.add(5);
-		danos.add(8);
-		danos.add(2);
-		danoCausado.setDanos(danos);
-		danoCausado.setDadoUsado("D10");
-		RolagemDanoPersistencia.atualizarRolagemDano(danoCausado);
-		System.out.println("X-X-X-X-X");
-		RolagemDano danoCausado2 = RolagemDanoPersistencia.procurarRolagemDano(danoCausado);
-		System.out.println(danoCausado2.getId());
-		danoCausado2.setDadoUsado("D12");
-		RolagemDanoPersistencia.atualizarRolagemDano(danoCausado2);
-		System.out.println("X-X-X-X-X");
-		System.out.println(danoCausado2.getDadoUsado());
 		
 	}
 

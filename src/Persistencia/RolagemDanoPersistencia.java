@@ -17,6 +17,7 @@ public class RolagemDanoPersistencia {
     		
     		return true;
     	} catch(Exception error) {
+    		System.out.println(error.getMessage());
     		return false;
     	}
     }
@@ -25,11 +26,11 @@ public class RolagemDanoPersistencia {
     	try {
     		EntityManager manager = EntityManagerFactory.getInstance();
     		manager.getTransaction().begin();
-    		manager.persist(rolagem);    		
+    		manager.persist(rolagem);   		
     		manager.getTransaction().commit();
-    		
     		return true;
     	} catch(Exception error) {
+    		System.out.println(error.getMessage());
     		return false;
     	}
     }
@@ -43,13 +44,13 @@ public class RolagemDanoPersistencia {
     		
     		return true;
     	} catch(Exception error) {
+    		System.out.println(error.getMessage());
     		return false;
     	}
     }
     
     public static RolagemDano procurarRolagemDano (RolagemDano rolagem) {
 		EntityManager manager = EntityManagerFactory.getInstance();
-		manager.getTransaction().begin();
 		Query proq = manager.createQuery("from RolagemDano where id = :param");
 		proq.setParameter("param", rolagem.getId());
 
@@ -59,13 +60,11 @@ public class RolagemDanoPersistencia {
 		if(!pastas.isEmpty()) {
 			return pastas.get(0);
 		}
-		
 		return null;
     }
     
     public static RolagemDano procurarRolagemDano (int id) {
 		EntityManager manager = EntityManagerFactory.getInstance();
-		manager.getTransaction().begin();
 		Query proq = manager.createQuery("from RolagemDano where id = :param");
 		proq.setParameter("param", id);
 
