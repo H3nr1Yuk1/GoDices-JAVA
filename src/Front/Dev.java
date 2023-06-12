@@ -17,7 +17,7 @@ import Entidades.RolagemDano;
 import Persistencia.Persistencia;
 import Persistencia.RolagemDanoPersistencia;
 
-public class Principal {
+public class Dev {
 	public static void main(String[] args) {
 		
 		/*

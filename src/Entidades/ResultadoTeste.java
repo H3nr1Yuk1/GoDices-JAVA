@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//@Entity
+@Entity
 public class ResultadoTeste extends Resultado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +20,16 @@ public class ResultadoTeste extends Resultado {
     public ResultadoTeste(int valorEscolhido, ArrayList<Modificador> modificadores){
         super("Teste", valorEscolhido, modificadores);
     }
+    
+    public int getId() {
+		return id;
+	}
 
-    public ArrayList<Modificador> getModificadores() {
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public ArrayList<Modificador> getModificadores() {
         return super.getModificadores();
     }
 
