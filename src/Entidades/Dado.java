@@ -1,11 +1,17 @@
 package Entidades;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public abstract class Dado {
-    int faces;
-    int quantidade;
-    ArrayList<Integer> rolagens;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
+public class Dado {
+	private int faces;
+    @Column(unique = true)
+    private int quantidade;
+    private ArrayList<Integer> rolagens;
 
     public Dado() {
     }
@@ -43,6 +49,24 @@ public abstract class Dado {
         this.rolagens = rolagens;
     }
 
-    public abstract ArrayList<Integer> rolarDado();
+    public ArrayList<Integer> rolarDado(){
+    	this.rolagens = new ArrayList<Integer>();
+        Random random = new Random();
+
+        if(this.quantidade <= 0){
+            int dadosReais = -quantidade + 2;
+            for(int i = 0; i < dadosReais; i++){
+                int valor = random.nextInt(this.faces) + 1;
+                this.rolagens.add(valor);
+            }
+            return rolagens;
+        } else {
+            for(int i = 0; i < this.quantidade; i++){
+                int valor = random.nextInt(this.faces) + 1;
+                this.rolagens.add(valor);
+            }
+            return this.rolagens;
+        }	
+    }
 
 }

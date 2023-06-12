@@ -1,8 +1,8 @@
 package Entidades;
 
 public class Modificador {
-    String nome;
-    int valor;
+	private String nome;
+	private int valor;
 
     public Modificador() {
     }
