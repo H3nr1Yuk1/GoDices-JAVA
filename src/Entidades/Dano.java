@@ -8,7 +8,7 @@ public class Dano {
     private ArrayList<Modificador> fixos;
 	private Critico critico;
 	private ArrayList<RolagemDano> rolagemDano;
-    
+	
     public Dano() {
 	}
     
@@ -85,4 +85,5 @@ public class Dano {
         }
         return this.rolagemDano;
 	}
+
 }

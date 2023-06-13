@@ -1,7 +1,12 @@
 package Entidades;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
 public class Modificador {
 	private String nome;
+    @Column(unique = true)
 	private int valor;
 
     public Modificador() {

@@ -15,6 +15,7 @@ public class Resultado {
 	private int valorEscolhido;
 	private ArrayList<Modificador> modificadores;
     private Critico critico;
+    private Dano dano;
     
     public Resultado() {
     }
@@ -55,6 +56,14 @@ public class Resultado {
 
 	public void setCritico(Critico critico) {
 		this.critico = critico;
+	}
+	
+	public Dano getDano() {
+		return dano;
+	}
+
+	public void setDano(Dano dano) {
+		this.dano = dano;
 	}
 
 	public int gerarResultado() {
