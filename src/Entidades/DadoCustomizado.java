@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class DadoCustomizado {
@@ -17,7 +18,8 @@ public class DadoCustomizado {
 	private String nome;
 	private Dado teste;
 	private ArrayList<Modificador> modificadores;
-	private ResultadoAtaque resultado;
+	@OneToMany
+	private Resultado resultado;
 	private Critico critico;
 	private Dano dano;
 
@@ -40,11 +42,11 @@ public class DadoCustomizado {
 		this.id = id;
 	}
 
-	public ResultadoAtaque getResultado() {
+	public Resultado getResultado() {
 		return resultado;
 	}
 
-	public void setResultado(ResultadoAtaque resultado) {
+	public void setResultado(Resultado resultado) {
 		this.resultado = resultado;
 	}
 
@@ -97,7 +99,7 @@ public class DadoCustomizado {
                     escolhido = this.teste.getRolagens().get(i);
                 }
             }
-            this.resultado = new ResultadoAtaque(escolhido, this.modificadores, this.critico, this.dano);
+            this.resultado = new Resultado(escolhido, this.modificadores, this.critico, this.dano);
             return this.resultado.gerarResultado();
         } else {
             int escolhido = 0;
@@ -107,7 +109,7 @@ public class DadoCustomizado {
                     escolhido = this.teste.getRolagens().get(i);
                 }
             }
-            this.resultado = new ResultadoAtaque(escolhido, this.modificadores, this.critico, this.dano);
+            this.resultado = new Resultado(escolhido, this.modificadores, this.critico, this.dano);
             return this.resultado.gerarResultado();
         }
 	}

@@ -20,10 +20,11 @@ public class Resultado {
     public Resultado() {
     }
 
-    public Resultado(int valorEscolhido, ArrayList<Modificador> modificadores, Critico critico) {
+    public Resultado(int valorEscolhido, ArrayList<Modificador> modificadores, Critico critico, Dano dano) {
         this.valorEscolhido = valorEscolhido;
         this.modificadores = modificadores;
         this.critico = critico;
+        this.dano = dano;
     }
         
     public int getId() {

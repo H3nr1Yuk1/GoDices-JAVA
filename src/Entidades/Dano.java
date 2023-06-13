@@ -3,7 +3,15 @@ package Entidades;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Dano {
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private ArrayList<Dado> dados;
     private ArrayList<Modificador> fixos;
 	private Critico critico;
