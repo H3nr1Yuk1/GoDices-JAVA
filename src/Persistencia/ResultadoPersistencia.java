@@ -55,10 +55,10 @@ public class ResultadoPersistencia {
 		proq.setParameter("param", resultado.getId());
 
 		@SuppressWarnings("unchecked")
-		List<Resultado> pastas = proq.getResultList();
+		List<Resultado> resultados = proq.getResultList();
 		
-		if(!pastas.isEmpty()) {
-			return pastas.get(0);
+		if(!resultados.isEmpty()) {
+			return resultados.get(0);
 		}
 		return null;
     }
@@ -69,10 +69,10 @@ public class ResultadoPersistencia {
 		proq.setParameter("param", id);
 
 		@SuppressWarnings("unchecked")
-		List<Resultado> pastas = proq.getResultList();
+		List<Resultado> resultados = proq.getResultList();
 		
-		if(!pastas.isEmpty()) {
-			return pastas.get(0);
+		if(!resultados.isEmpty()) {
+			return resultados.get(0);
 		}
 		
 		return null;

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Resultado {
@@ -14,7 +15,9 @@ public class Resultado {
 	private int id;
 	private int valorEscolhido;
 	private ArrayList<Modificador> modificadores;
-    private Critico critico;
+    @OneToOne
+	private Critico critico;
+    @OneToOne
     private Dano dano;
     
     public Resultado() {

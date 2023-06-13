@@ -5,10 +5,12 @@ import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Dado {
 	private int faces;
+	@Id
     @Column(unique = true)
     private int quantidade;
     private ArrayList<Integer> rolagens;

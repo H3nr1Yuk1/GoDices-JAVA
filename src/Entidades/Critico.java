@@ -1,7 +1,19 @@
 package Entidades;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Critico {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(unique = true)
     private int margem;
+	@Column(unique = true)
     private int multiplicador;
 	
     public Critico() {

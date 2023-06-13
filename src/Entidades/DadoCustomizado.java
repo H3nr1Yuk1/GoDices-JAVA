@@ -1,6 +1,7 @@
 package Entidades;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class DadoCustomizado {
@@ -16,11 +18,14 @@ public class DadoCustomizado {
 	private int id;
     @Column(unique = true)
 	private String nome;
+    @OneToOne
 	private Dado teste;
 	private ArrayList<Modificador> modificadores;
 	@OneToMany
-	private Resultado resultado;
+	private List<Resultado> resultado;
+	@OneToOne
 	private Critico critico;
+	@OneToOne
 	private Dano dano;
 
     public DadoCustomizado() {
@@ -42,11 +47,11 @@ public class DadoCustomizado {
 		this.id = id;
 	}
 
-	public Resultado getResultado() {
+	public List<Resultado> getResultado() {
 		return resultado;
 	}
 
-	public void setResultado(Resultado resultado) {
+	public void setResultado(List<Resultado> resultado) {
 		this.resultado = resultado;
 	}
 
@@ -99,8 +104,9 @@ public class DadoCustomizado {
                     escolhido = this.teste.getRolagens().get(i);
                 }
             }
-            this.resultado = new Resultado(escolhido, this.modificadores, this.critico, this.dano);
-            return this.resultado.gerarResultado();
+            Resultado ultimoResultado = new Resultado(escolhido, this.modificadores, this.critico, this.dano);
+            this.resultado.add(ultimoResultado);
+            return ultimoResultado.gerarResultado();
         } else {
             int escolhido = 0;
             this.teste.rolarDado();
@@ -109,12 +115,15 @@ public class DadoCustomizado {
                     escolhido = this.teste.getRolagens().get(i);
                 }
             }
-            this.resultado = new Resultado(escolhido, this.modificadores, this.critico, this.dano);
-            return this.resultado.gerarResultado();
+            Resultado ultimoResultado = new Resultado(escolhido, this.modificadores, this.critico, this.dano);
+            this.resultado.add(ultimoResultado);
+            return ultimoResultado.gerarResultado();
         }
 	}
 
     public int obterValor(){
-    	return this.resultado.gerarResultado();
+    	int num = this.resultado.size() - 1;
+    	Resultado ultimoResultado = this.resultado.get(num);
+    	return ultimoResultado.gerarResultado();
     }
 }

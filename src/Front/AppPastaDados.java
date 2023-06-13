@@ -1,5 +1,100 @@
 package Front;
 
+import Entidades.PastaDados;
+import Persistencia.PastaDadosPersistencia;
+
 public class AppPastaDados {
-    
+
+	public static int resp = 0;
+	public static boolean keyC1 = true; 
+	
+	public static void menuPastaDados() {
+		do {
+			gerarMenu();
+	        resp = Console.readInt("▣ Ir para? ");
+	        switch(resp) {
+	        case 1:
+	        	int respC1 = 0;
+	        	System.out.println("●------------------------------------●");
+				System.out.println("Indo para [ Acessar Pastas ]");
+				gerarListaPastas();
+				if(keyC1 == false) {
+					break;
+				}
+				respC1 = Console.readInt("▣ Entrar em qual pasta? ");
+	        	break;
+	        case 2:
+	        	System.out.println("●------------------------------------●");
+				System.out.println("Indo para [ Criar Pasta ]");
+				PastaDados pastaNova = new PastaDados();
+				pastaNova.setNomePasta(Console.readString("▣ Qual será o nome da pasta? "));
+				String verifica = Console.readString("▣ Quer adicionar dados à ela? [S / N] ");
+				if(verifica.equalsIgnoreCase("S") || verifica.equalsIgnoreCase("SIM")) {
+					
+				} else {
+					System.out.println("▣ Beleza!");
+					if(PastaDadosPersistencia.criarPastaDados(pastaNova) != false) {
+						System.out.println("▣ Pasta criada!");
+					} else {
+						System.out.println("◊ Houve um erro na criação da pasta.");
+						System.out.println("◊ Tente novamente.");
+					}
+				}
+	        	break;
+	        case 3:
+	        	int respC3 = 0;
+	        	System.out.println("●------------------------------------●");
+				System.out.println("Indo para [ Remover Pasta ]");
+				gerarListaPastas();
+				if(keyC1 == false) {
+					break;
+				}
+				respC3 = Console.readInt("▣ Remover em qual pasta? ");
+				if(PastaDadosPersistencia.procurarPastaDadosId(respC3) != null) {
+					PastaDados pastaDeletar = PastaDadosPersistencia.procurarPastaDadosId(respC3);
+					if(PastaDadosPersistencia.removerPastaDados(pastaDeletar) != false) {
+						System.out.println("▣ Pasta deletada com sucesso!");
+					} else {
+						System.out.println("◊ Houve um erro na remoção da pasta.");
+						System.out.println("◊ Tente novamente.");
+					}
+				} else {
+					System.out.println("◊ Pasta não encontrada!");
+				}
+	        	break;
+	        case 4:
+	        	System.out.println("●------------------------------------●");
+				System.out.println("Indo para [ Menu Inicial ]");
+	        	break;
+	        default:
+	        	System.out.println("●------------------------------------●");
+				System.out.println("Opção inválida!!!");
+				System.out.println("Selecione uma opção novamente.");
+	        	break;
+	        }
+		}while (resp != 4);
+	}
+	
+	public static void gerarMenu() {
+		System.out.println("●------------------------------------●");
+		System.out.println("■ 1 - Acessar Pastas");
+        System.out.println("■ 2 - Criar Pasta");
+        System.out.println("■ 3 - Remover Pasta");
+        System.out.println("■ 4 - Voltar");
+        System.out.println("●------------------------------------●");
+	}
+	
+	public static void gerarListaPastas() {
+		System.out.println("●------------------------------------●");
+		if(PastaDadosPersistencia.listarPastaDados() != null) {
+			int i = 1;
+			for(PastaDados listaPastas : PastaDadosPersistencia.listarPastaDados()) {
+				System.out.println("■ " + i + " - " + listaPastas.getNomePasta());
+			}
+			System.out.println("●------------------------------------●");
+		} else {
+			System.out.println("◊ Não há nenhuma pasta criada!");
+			keyC1 = false;
+		}
+	}
 }

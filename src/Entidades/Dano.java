@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Dano {
@@ -15,6 +16,7 @@ public class Dano {
     private int id;
     private ArrayList<Dado> dados;
     private ArrayList<Modificador> fixos;
+    @OneToOne
 	private Critico critico;
 	private ArrayList<RolagemDano> rolagemDano;
 	
