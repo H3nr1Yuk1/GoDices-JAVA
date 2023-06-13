@@ -5,10 +5,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import Entidades.ResultadoTeste;
+import Entidades.Resultado;
 
 public class ResultadoPersistencia {
-	public static boolean criarResultadoTeste (ResultadoTeste resultado) {
+	public static boolean criarResultadoTeste (Resultado resultado) {
     	try {
     		EntityManager manager = EntityManagerFactory.getInstance();
     		manager.getTransaction().begin();
@@ -22,7 +22,7 @@ public class ResultadoPersistencia {
     	}
     }
     
-    public static boolean atualizarResultadoTeste (ResultadoTeste resultado) {
+    public static boolean atualizarResultadoTeste (Resultado resultado) {
     	try {
     		EntityManager manager = EntityManagerFactory.getInstance();
     		manager.getTransaction().begin();
@@ -35,7 +35,7 @@ public class ResultadoPersistencia {
     	}
     }
     
-    public static boolean removerResultadoTeste (ResultadoTeste resultado) {
+    public static boolean removerResultadoTeste (Resultado resultado) {
     	try {
     		EntityManager manager = EntityManagerFactory.getInstance();
     		manager.getTransaction().begin();
@@ -49,13 +49,13 @@ public class ResultadoPersistencia {
     	}
     }
     
-    public static ResultadoTeste procurarResultadoTeste (ResultadoTeste resultado) {
+    public static Resultado procurarResultadoTeste (Resultado resultado) {
 		EntityManager manager = EntityManagerFactory.getInstance();
 		Query proq = manager.createQuery("from RolagemDano where id = :param");
 		proq.setParameter("param", resultado.getId());
 
 		@SuppressWarnings("unchecked")
-		List<ResultadoTeste> pastas = proq.getResultList();
+		List<Resultado> pastas = proq.getResultList();
 		
 		if(!pastas.isEmpty()) {
 			return pastas.get(0);
@@ -63,13 +63,13 @@ public class ResultadoPersistencia {
 		return null;
     }
     
-    public static ResultadoTeste procurarRolagemDano (int id) {
+    public static Resultado procurarRolagemDano (int id) {
 		EntityManager manager = EntityManagerFactory.getInstance();
 		Query proq = manager.createQuery("from RolagemDano where id = :param");
 		proq.setParameter("param", id);
 
 		@SuppressWarnings("unchecked")
-		List<ResultadoTeste> pastas = proq.getResultList();
+		List<Resultado> pastas = proq.getResultList();
 		
 		if(!pastas.isEmpty()) {
 			return pastas.get(0);
