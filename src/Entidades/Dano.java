@@ -12,8 +12,8 @@ import javax.persistence.OneToOne;
 @Entity
 public class Dano {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
     private ArrayList<Dado> dados;
     private ArrayList<Modificador> fixos;
     @OneToOne
@@ -59,6 +59,14 @@ public class Dano {
 
 	public void setRolagemDano(ArrayList<RolagemDano> rolagemDano) {
 		this.rolagemDano = rolagemDano;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public ArrayList<RolagemDano> rolarDano(){

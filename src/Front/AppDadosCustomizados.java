@@ -9,8 +9,12 @@ import Entidades.DadoDano;
 import Entidades.DadoPadrao;
 import Entidades.Dano;
 import Entidades.Modificador;
+import Negocios.CriticoNegocios;
 import Negocios.DadoCustomizadoNegocios;
+import Negocios.DanoNegocios;
+import Persistencia.CriticoPersistencia;
 import Persistencia.DadoCustomizadoPersistencia;
+import Persistencia.DanoPersistencia;
 
 public class AppDadosCustomizados {
 	
@@ -97,8 +101,12 @@ public class AppDadosCustomizados {
 		dadoNovo.setModificadores(modificadores);
 		critico.setMargem(Console.readInt("▣ Margem de ameaça: "));
 		critico.setMultiplicador(Console.readInt("▣ Multiplicador (Número): X"));
+		if(CriticoNegocios.verificarCritico(critico)) {
+			CriticoPersistencia.criarCritico(critico);
+		} else {
+			critico = CriticoPersistencia.procurarCritico(critico);
+		}
 		dadoNovo.setCritico(critico);
-		dano.setCritico(critico);
 		String respDmg = "";
 		do {
 			int i = 0;
@@ -136,7 +144,7 @@ public class AppDadosCustomizados {
 						modificadoresDano.add(modDano);
 						System.out.println("▣ Modificador adicionado!");
 						i++;
-					}else {
+					} else {
 						System.out.println("◊ Modificador já existente");
 					}
 				} else {
@@ -151,9 +159,15 @@ public class AppDadosCustomizados {
 			} while(respDmg.equalsIgnoreCase("S"));
 		}
 		dano.setFixos(modificadoresDano);
+		if(DanoNegocios.verificarDano(dano)) {
+			DanoPersistencia.criarDano(dano);
+		} else {
+			dano = DanoPersistencia.procurarDano(dano);
+		}
+		dano.setCritico(critico);
 		dadoNovo.setDano(dano);
 		if(DadoCustomizadoNegocios.verificarDadoExistente(dadoNovo)) {
-			if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo) == false) {
+			if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo) == true) {
 				System.out.println("▣ Dado criado e adicionado com sucesso!");
 			} else {
 				System.out.println("◊ Houve um erro!");

@@ -23,6 +23,14 @@ public class Critico {
 		this.margem = margem;
 		this.multiplicador = multiplicador;
 	}
+    
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getMargem() {
 		return margem;

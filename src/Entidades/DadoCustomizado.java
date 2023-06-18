@@ -3,7 +3,6 @@ package Entidades;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +17,7 @@ public class DadoCustomizado {
 	private int id;
 	private String nome;
     @OneToOne
-	private Dado teste;
+	private DadoPadrao teste;
 	private ArrayList<Modificador> modificadores;
 	@OneToMany
 	private List<Resultado> resultado;
@@ -30,7 +29,7 @@ public class DadoCustomizado {
     public DadoCustomizado() {
     }
 
-    public DadoCustomizado(String tipo, String nome, Dado teste, ArrayList<Modificador> modificadores, Critico critico, Dano dano) {
+    public DadoCustomizado(String tipo, String nome, DadoPadrao teste, ArrayList<Modificador> modificadores, Critico critico, Dano dano) {
         this.nome = nome;
         this.teste = teste;
         this.modificadores = modificadores;
@@ -78,11 +77,11 @@ public class DadoCustomizado {
 		this.nome = nome;
 	}
 
-	public Dado getTeste() {
+	public DadoPadrao getTeste() {
 		return teste;
 	}
 
-	public void setTeste(Dado teste) {
+	public void setTeste(DadoPadrao teste) {
 		this.teste = teste;
 	}
 
