@@ -8,7 +8,7 @@ public class AppPastaDados {
 	public static int resp = 0;
 	public static boolean keyC1 = true; 
 	
-	public static void menuPastaDados() {
+	public static void gerarMenuPastaDados() {
 		do {
 			gerarMenu();
 	        resp = Console.readInt("▣ Ir para? ");
@@ -19,9 +19,13 @@ public class AppPastaDados {
 				System.out.println("Indo para [ Acessar Pastas ]");
 				gerarListaPastas();
 				if(keyC1 == false) {
+					keyC1 = true;
 					break;
 				}
 				respC1 = Console.readInt("▣ Entrar em qual pasta? ");
+				System.out.println("●------------------------------------●");
+				System.out.println("Indo para a pasta [ " + PastaDadosPersistencia.procurarPastaDadosIndex(respC1).getNomePasta() + " ]");
+				gerarMenuPastaDadoEscolhida(PastaDadosPersistencia.procurarPastaDadosIndex(respC1));
 	        	break;
 	        case 2:
 	        	System.out.println("●------------------------------------●");
@@ -47,12 +51,13 @@ public class AppPastaDados {
 				System.out.println("Indo para [ Remover Pasta ]");
 				gerarListaPastas();
 				if(keyC1 == false) {
+					keyC1 = true;
 					break;
 				}
 				respC3 = Console.readInt("▣ Remover em qual pasta? ");
-				if(PastaDadosPersistencia.procurarPastaDadosId(respC3) != null) {
-					PastaDados pastaDeletar = PastaDadosPersistencia.procurarPastaDadosId(respC3);
-					if(PastaDadosPersistencia.removerPastaDados(pastaDeletar) != false) {
+				PastaDados pastaDeletar = PastaDadosPersistencia.procurarPastaDadosIndex(respC3);				
+				if(PastaDadosPersistencia.procurarPastaDados(pastaDeletar) != null) {
+					if(PastaDadosPersistencia.removerPastaDados(PastaDadosPersistencia.procurarPastaDados(pastaDeletar)) != false) {
 						System.out.println("▣ Pasta deletada com sucesso!");
 					} else {
 						System.out.println("◊ Houve um erro na remoção da pasta.");
@@ -90,11 +95,25 @@ public class AppPastaDados {
 			int i = 1;
 			for(PastaDados listaPastas : PastaDadosPersistencia.listarPastaDados()) {
 				System.out.println("■ " + i + " - " + listaPastas.getNomePasta());
+				i++;
 			}
 			System.out.println("●------------------------------------●");
 		} else {
 			System.out.println("◊ Não há nenhuma pasta criada!");
 			keyC1 = false;
+		}
+	}
+	
+	public static void gerarMenuPastaDadoEscolhida(PastaDados pastaEscolhida) {
+		System.out.println("●------------------------------------●");
+		System.out.println("Pasta: " + pastaEscolhida.getNomePasta());
+		if(pastaEscolhida.getDadosPasta() == null) {
+			System.out.println("\nNão há nenhum dado em sua pasta\n");
+			do {
+				AppDadosCustomizados.iniciarAppDados();
+			} while(AppDadosCustomizados.iniciarAppDados() != 4);
+		} else {
+			System.out.println("Dados : ");
 		}
 	}
 }

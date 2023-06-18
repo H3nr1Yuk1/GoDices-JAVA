@@ -51,7 +51,7 @@ public class DadoCustomizadoPersistencia {
     
     public static DadoCustomizado procurarDadoCustomizado (DadoCustomizado dado) {
 		EntityManager manager = EntityManagerFactory.getInstance();
-		Query proq = manager.createQuery("from RolagemDano where id = :param");
+		Query proq = manager.createQuery("from DadoCustomizado where id = :param");
 		proq.setParameter("param", dado.getId());
 
 		@SuppressWarnings("unchecked")
@@ -63,10 +63,25 @@ public class DadoCustomizadoPersistencia {
 		return null;
     }
     
-    public static DadoCustomizado procurarDadoCustomizado (int id) {
+    public static DadoCustomizado procurarDadoCustomizadoId (int id) {
 		EntityManager manager = EntityManagerFactory.getInstance();
-		Query proq = manager.createQuery("from RolagemDano where id = :param");
+		Query proq = manager.createQuery("from DadoCustomizado where id = :param");
 		proq.setParameter("param", id);
+
+		@SuppressWarnings("unchecked")
+		List<DadoCustomizado> pastas = proq.getResultList();
+		
+		if(!pastas.isEmpty()) {
+			return pastas.get(0);
+		}
+		
+		return null;
+    }
+    
+    public static DadoCustomizado procurarDadoCustomizadoNome (String nome) {
+		EntityManager manager = EntityManagerFactory.getInstance();
+		Query proq = manager.createQuery("from DadoCustomizado where nome = :param");
+		proq.setParameter("param", nome);
 
 		@SuppressWarnings("unchecked")
 		List<DadoCustomizado> pastas = proq.getResultList();
@@ -80,7 +95,7 @@ public class DadoCustomizadoPersistencia {
     
     public static List<DadoCustomizado> listarDadoCustomizado () {
 		EntityManager manager = EntityManagerFactory.getInstance();
-		Query proq = manager.createQuery("* from DadoCustomizado");
+		Query proq = manager.createQuery("from DadoCustomizado");
 
 		@SuppressWarnings("unchecked")
 		List<DadoCustomizado> pastas = proq.getResultList();

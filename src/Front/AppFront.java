@@ -20,7 +20,7 @@ public class AppFront {
 			case 1:
 				System.out.println("●------------------------------------●");
 				System.out.println("Indo para [ Minhas Pastas ]");
-				AppPastaDados.menuPastaDados();
+				AppPastaDados.gerarMenuPastaDados();
 				break;
 			case 2:
 				System.out.println("●------------------------------------●");

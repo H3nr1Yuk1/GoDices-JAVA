@@ -16,7 +16,6 @@ public class DadoCustomizado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-    @Column(unique = true)
 	private String nome;
     @OneToOne
 	private Dado teste;

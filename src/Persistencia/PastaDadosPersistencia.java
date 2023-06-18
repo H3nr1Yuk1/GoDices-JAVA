@@ -91,4 +91,19 @@ public class PastaDadosPersistencia {
 		
 		return null;
     }
+    
+    public static PastaDados procurarPastaDadosIndex(int index) {
+    	int i = 1;
+    	if(PastaDadosPersistencia.listarPastaDados() != null) {
+    		for(PastaDados listaPastas : PastaDadosPersistencia.listarPastaDados()) {
+    			if(i == index) {
+    				PastaDados pasta = listaPastas;
+    				return pasta;
+    			}
+    			i++;
+    		}
+    		return null;
+    	}
+    	return null;
+    }
 }
