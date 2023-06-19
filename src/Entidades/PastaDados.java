@@ -1,6 +1,6 @@
 package Entidades;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +12,10 @@ import javax.persistence.Id;
 public class PastaDados {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	@Column(unique = true)
     private String nomePasta;
-    private ArrayList<DadoCustomizado> dadosPasta;
+    private List<DadoCustomizado> dadosPasta;
 	
     public PastaDados() {
 	}
@@ -24,16 +24,16 @@ public class PastaDados {
 		this.nomePasta = nomePasta;
 	}
     
-    public PastaDados(String nomePasta, ArrayList<DadoCustomizado> dadosPasta) {
+    public PastaDados(String nomePasta, List<DadoCustomizado> dadosPasta) {
 		this.nomePasta = nomePasta;
 		this.dadosPasta = dadosPasta;
 	}
     
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -45,11 +45,11 @@ public class PastaDados {
 		this.nomePasta = nomePasta;
 	}
 
-	public ArrayList<DadoCustomizado> getDadosPasta() {
+	public List<DadoCustomizado> getDadosPasta() {
 		return dadosPasta;
 	}
 
-	public void setDadosPasta(ArrayList<DadoCustomizado> dadosPasta) {
+	public void setDadosPasta(List<DadoCustomizado> dadosPasta) {
 		this.dadosPasta = dadosPasta;
 	}    
 }

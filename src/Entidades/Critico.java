@@ -1,20 +1,20 @@
 package Entidades;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Critico {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	@Column(unique = true)
+	private Long id;
     private int margem;
-	@Column(unique = true)
     private int multiplicador;
+    @OneToOne
+    private Dano dano;
 	
     public Critico() {
 	}
@@ -24,11 +24,11 @@ public class Critico {
 		this.multiplicador = multiplicador;
 	}
     
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -1,6 +1,7 @@
 package Entidades;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.persistence.Entity;
@@ -12,8 +13,8 @@ public class DadoDano extends Dado {
 	public DadoDano() {
 	}
 
-	public DadoDano(int quantidade) {
-		super(quantidade);
+	public DadoDano(int faces) {
+		super(faces);
 	}
 
 	public DadoDano(int faces, int quantidade) {
@@ -29,7 +30,7 @@ public class DadoDano extends Dado {
 	}
 
 	@Override
-	public ArrayList<Integer> rolarDado() {
+	public List<Integer> rolarDado() {
 		this.setRolagens(new ArrayList<Integer>());
         Random random = new Random();
 

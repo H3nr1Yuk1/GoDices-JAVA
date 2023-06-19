@@ -1,25 +1,22 @@
 package Entidades;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class DadoCustomizado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private String nome;
     @OneToOne
 	private DadoPadrao teste;
-	private ArrayList<Modificador> modificadores;
-	@OneToMany
+	private List<Modificador> modificadores;
 	private List<Resultado> resultado;
 	@OneToOne
 	private Critico critico;
@@ -29,7 +26,7 @@ public class DadoCustomizado {
     public DadoCustomizado() {
     }
 
-    public DadoCustomizado(String tipo, String nome, DadoPadrao teste, ArrayList<Modificador> modificadores, Critico critico, Dano dano) {
+    public DadoCustomizado(String tipo, String nome, DadoPadrao teste, List<Modificador> modificadores, Critico critico, Dano dano) {
         this.nome = nome;
         this.teste = teste;
         this.modificadores = modificadores;
@@ -37,11 +34,11 @@ public class DadoCustomizado {
 		this.dano = dano;
     }
     
-    public int getId() {
+    public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -85,11 +82,11 @@ public class DadoCustomizado {
 		this.teste = teste;
 	}
 
-	public ArrayList<Modificador> getModificadores() {
+	public List<Modificador> getModificadores() {
 		return modificadores;
 	}
 
-	public void setModificadores(ArrayList<Modificador> modificadores) {
+	public void setModificadores(List<Modificador> modificadores) {
 		this.modificadores = modificadores;
 	}
 

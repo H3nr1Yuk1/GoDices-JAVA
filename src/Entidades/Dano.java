@@ -1,6 +1,7 @@
 package Entidades;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.persistence.Entity;
@@ -13,35 +14,35 @@ import javax.persistence.OneToOne;
 public class Dano {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-    private ArrayList<Dado> dados;
-    private ArrayList<Modificador> fixos;
+	private Long id;
+    private List<Dado> dados;
+    private List<Modificador> fixos;
     @OneToOne
 	private Critico critico;
-	private ArrayList<RolagemDano> rolagemDano;
+	private List<RolagemDano> rolagemDano;
 	
     public Dano() {
 	}
     
-    public Dano(ArrayList<Dado> dados, ArrayList<Modificador> fixos, Critico critico) {
+    public Dano(List<Dado> dados, List<Modificador> fixos, Critico critico) {
 		this.dados = dados;
 		this.fixos = fixos;
 		this.critico = critico;
 	}
 
-	public ArrayList<Dado> getDados() {
+	public List<Dado> getDados() {
 		return dados;
 	}
 
-	public void setDados(ArrayList<Dado> dados) {
+	public void setDados(List<Dado> dados) {
 		this.dados = dados;
 	}
 
-	public ArrayList<Modificador> getFixos() {
+	public List<Modificador> getFixos() {
 		return fixos;
 	}
 
-	public void setFixos(ArrayList<Modificador> fixos) {
+	public void setFixos(List<Modificador> fixos) {
 		this.fixos = fixos;
 	}
 		
@@ -53,25 +54,25 @@ public class Dano {
 		this.critico = critico;
 	}
 	
-	public ArrayList<RolagemDano> getRolagemDano() {
+	public List<RolagemDano> getRolagemDano() {
 		return rolagemDano;
 	}
 
-	public void setRolagemDano(ArrayList<RolagemDano> rolagemDano) {
+	public void setRolagemDano(List<RolagemDano> rolagemDano) {
 		this.rolagemDano = rolagemDano;
 	}
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public ArrayList<RolagemDano> rolarDano(){
+	public List<RolagemDano> rolarDano(){
 		this.rolagemDano = new ArrayList<RolagemDano>();
-		ArrayList<Integer> danoCausado = new ArrayList<Integer>();
+		List<Integer> danoCausado = new ArrayList<Integer>();
         Random random = new Random();
 
         for(int i = 0; i < this.getDados().size(); i++) {
@@ -87,9 +88,9 @@ public class Dano {
         return this.rolagemDano;
 	}
     
-	public ArrayList<RolagemDano> rolarDanoCritico(){
+	public List<RolagemDano> rolarDanoCritico(){
 		rolagemDano = new ArrayList<RolagemDano>();
-		ArrayList<Integer> danoCausado = new ArrayList<Integer>();
+		List<Integer> danoCausado = new ArrayList<Integer>();
         Random random = new Random();
         
         for(int i = 0; i < this.getDados().size(); i++) {

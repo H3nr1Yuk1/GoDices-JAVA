@@ -1,6 +1,5 @@
 package Entidades;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,9 +9,8 @@ import javax.persistence.Id;
 public class Modificador {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private String nome;
-    @Column(unique = true)
 	private int valor;
 
     public Modificador() {
@@ -35,5 +33,13 @@ public class Modificador {
     public void setValor(int valor) {
         this.valor = valor;
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
     
 }

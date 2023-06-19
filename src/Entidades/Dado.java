@@ -1,25 +1,28 @@
 package Entidades;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public abstract class Dado {
-	private int faces;
 	@Id
-    @Column(unique = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private int faces;
     private int quantidade;
-    private ArrayList<Integer> rolagens;
+    @ElementCollection
+    private List<Integer> rolagens;
 
     public Dado() {
     }
 
-    public Dado(int quantidade) {
-        this.quantidade = quantidade;
+    public Dado(int faces) {
+        this.faces = faces;
     }
     
     public Dado(int faces, int quantidade) {
@@ -43,13 +46,13 @@ public abstract class Dado {
         this.quantidade = quantidade;
     }
 
-    public ArrayList<Integer> getRolagens() {
+    public List<Integer> getRolagens() {
         return rolagens;
     }
 
-    public void setRolagens(ArrayList<Integer> rolagens) {
+    public void setRolagens(List<Integer> rolagens) {
         this.rolagens = rolagens;
     }
 
-    public abstract ArrayList<Integer> rolarDado();
+    public abstract List<Integer> rolarDado();
 }

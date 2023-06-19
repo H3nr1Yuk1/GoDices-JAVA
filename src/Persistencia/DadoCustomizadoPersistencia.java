@@ -55,10 +55,10 @@ public class DadoCustomizadoPersistencia {
 		proq.setParameter("param", dado.getId());
 
 		@SuppressWarnings("unchecked")
-		List<DadoCustomizado> pastas = proq.getResultList();
+		List<DadoCustomizado> dadosCustom = proq.getResultList();
 		
-		if(!pastas.isEmpty()) {
-			return pastas.get(0);
+		if(!dadosCustom.isEmpty()) {
+			return dadosCustom.get(0);
 		}
 		return null;
     }
@@ -69,10 +69,10 @@ public class DadoCustomizadoPersistencia {
 		proq.setParameter("param", id);
 
 		@SuppressWarnings("unchecked")
-		List<DadoCustomizado> pastas = proq.getResultList();
+		List<DadoCustomizado> dadosCustom = proq.getResultList();
 		
-		if(!pastas.isEmpty()) {
-			return pastas.get(0);
+		if(!dadosCustom.isEmpty()) {
+			return dadosCustom.get(0);
 		}
 		
 		return null;
@@ -84,24 +84,24 @@ public class DadoCustomizadoPersistencia {
 		proq.setParameter("param", nome);
 
 		@SuppressWarnings("unchecked")
-		List<DadoCustomizado> pastas = proq.getResultList();
+		List<DadoCustomizado> dadosCustom = proq.getResultList();
 		
-		if(!pastas.isEmpty()) {
-			return pastas.get(0);
+		if(!dadosCustom.isEmpty()) {
+			return dadosCustom.get(0);
 		}
 		
 		return null;
     }
     
+    @SuppressWarnings("unchecked")
     public static List<DadoCustomizado> listarDadoCustomizado () {
 		EntityManager manager = EntityManagerFactory.getInstance();
 		Query proq = manager.createQuery("from DadoCustomizado");
-
-		@SuppressWarnings("unchecked")
-		List<DadoCustomizado> pastas = proq.getResultList();
+				
+		List<DadoCustomizado> dadosCustom = proq.getResultList();
 		
-		if(!pastas.isEmpty()) {
-			return pastas;
+		if(!dadosCustom.isEmpty()) {
+			return dadosCustom;
 		}
 		
 		return null;

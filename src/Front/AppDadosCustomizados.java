@@ -11,10 +11,16 @@ import Entidades.Dano;
 import Entidades.Modificador;
 import Negocios.CriticoNegocios;
 import Negocios.DadoCustomizadoNegocios;
+import Negocios.DadoDanoNegocios;
+import Negocios.DadoPadraoNegocios;
 import Negocios.DanoNegocios;
+import Negocios.ModificadorNegocios;
 import Persistencia.CriticoPersistencia;
 import Persistencia.DadoCustomizadoPersistencia;
+import Persistencia.DadoDanoPersistencia;
+import Persistencia.DadoPadraoPersistencia;
 import Persistencia.DanoPersistencia;
+import Persistencia.ModificadorPersistencia;
 
 public class AppDadosCustomizados {
 	
@@ -72,6 +78,11 @@ public class AppDadosCustomizados {
 		System.out.println("◯------------------------------------◯");
 		dadoNovo.setNome(Console.readString("▣ Nome do dado: "));
 		teste.setQuantidade(Console.readInt("▣ Quantidade de D20: "));
+		if(DadoPadraoNegocios.verificarDadoPadrao(teste)) {
+			DadoPadraoPersistencia.criarDadoPadrao(teste);
+		} else {
+			teste = DadoPadraoPersistencia.procurarDadoPadrao(teste);
+		}
 		dadoNovo.setTeste(teste);
 		if(Console.readString("▣ Adicionar modificadores ao teste? [S/N] ").equalsIgnoreCase("S")) {
 			String respMod = "";
@@ -81,6 +92,11 @@ public class AppDadosCustomizados {
 				mod.setValor(Console.readInt("▣ Valor do modificador: "));
 				if(i != 0) {
 					if(!modificadores.get(i).equals(mod)) {
+						if(ModificadorNegocios.verificarModificador(mod)) {
+							ModificadorPersistencia.criarModificador(mod);
+						} else {
+							mod = ModificadorPersistencia.procurarModificador(mod);
+						}
 						modificadores.add(mod);
 						System.out.println("▣ Modificador adicionado!");
 						i++;
@@ -88,6 +104,11 @@ public class AppDadosCustomizados {
 						System.out.println("◊ Modificador já existente");
 					}
 				} else {
+					if(ModificadorNegocios.verificarModificador(mod)) {
+						ModificadorPersistencia.criarModificador(mod);
+					} else {
+						mod = ModificadorPersistencia.procurarModificador(mod);
+					}
 					modificadores.add(mod);
 					System.out.println("▣ Modificador adicionado!");
 					i++;
@@ -106,6 +127,7 @@ public class AppDadosCustomizados {
 		} else {
 			critico = CriticoPersistencia.procurarCritico(critico);
 		}
+		dano.setCritico(critico);
 		dadoNovo.setCritico(critico);
 		String respDmg = "";
 		do {
@@ -115,6 +137,11 @@ public class AppDadosCustomizados {
 			dadoDmg.setTipo(Console.readString("▣ Tipo de dano: "));
 			if(i != 0) {
 				if(!dadosDano.get(i).equals(dadoDmg)) {
+					if(DadoDanoNegocios.verificarDadoDano(dadoDmg)) {
+						DadoDanoPersistencia.criarDadoDano(dadoDmg);
+					} else {
+						dadoDmg = DadoDanoPersistencia.procurarDadoDano(dadoDmg);
+					}
 					dadosDano.add(dadoDmg);
 					System.out.println("▣ Dado adicionado!");
 					i++;
@@ -122,6 +149,11 @@ public class AppDadosCustomizados {
 					System.out.println("◊ Dado já existente");
 				}
 			} else {
+				if(DadoDanoNegocios.verificarDadoDano(dadoDmg)) {
+					DadoDanoPersistencia.criarDadoDano(dadoDmg);
+				} else {
+					dadoDmg = DadoDanoPersistencia.procurarDadoDano(dadoDmg);
+				}
 				dadosDano.add(dadoDmg);
 				System.out.println("▣ Dado adicionado!");
 				i++;
@@ -141,6 +173,11 @@ public class AppDadosCustomizados {
 				modDano.setValor(Console.readInt("▣ Valor do modificador: "));
 				if(i != 0) {
 					if(!modificadoresDano.get(i).equals(modDano)) {
+						if(ModificadorNegocios.verificarModificador(modDano)) {
+							ModificadorPersistencia.criarModificador(modDano);
+						} else {
+							modDano = ModificadorPersistencia.procurarModificador(modDano);
+						}
 						modificadoresDano.add(modDano);
 						System.out.println("▣ Modificador adicionado!");
 						i++;
@@ -148,6 +185,11 @@ public class AppDadosCustomizados {
 						System.out.println("◊ Modificador já existente");
 					}
 				} else {
+					if(ModificadorNegocios.verificarModificador(modDano)) {
+						ModificadorPersistencia.criarModificador(modDano);
+					} else {
+						modDano = ModificadorPersistencia.procurarModificador(modDano);
+					}
 					modificadoresDano.add(modDano);
 					System.out.println("▣ Modificador adicionado!");
 					i++;
@@ -164,7 +206,6 @@ public class AppDadosCustomizados {
 		} else {
 			dano = DanoPersistencia.procurarDano(dano);
 		}
-		dano.setCritico(critico);
 		dadoNovo.setDano(dano);
 		if(DadoCustomizadoNegocios.verificarDadoExistente(dadoNovo)) {
 			if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo) == true) {
