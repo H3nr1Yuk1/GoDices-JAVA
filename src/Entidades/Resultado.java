@@ -1,12 +1,11 @@
 package Entidades;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -15,8 +14,7 @@ public class Resultado {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private int valorEscolhido;
-	@OneToMany
-	private List<Modificador> modificadores;
+	private ArrayList<Modificador> modificadores;
     @OneToOne
 	private Critico critico;
     @OneToOne
@@ -25,7 +23,7 @@ public class Resultado {
     public Resultado() {
     }
 
-    public Resultado(int valorEscolhido, List<Modificador> modificadores, Critico critico, Dano dano) {
+    public Resultado(int valorEscolhido, ArrayList<Modificador> modificadores, Critico critico, Dano dano) {
         this.valorEscolhido = valorEscolhido;
         this.modificadores = modificadores;
         this.critico = critico;
@@ -48,11 +46,11 @@ public class Resultado {
 		this.valorEscolhido = valorEscolhido;
 	}
 
-	public List<Modificador> getModificadores() {
+	public ArrayList<Modificador> getModificadores() {
 		return modificadores;
 	}
 
-	public void setModificadores(List<Modificador> modificadores) {
+	public void setModificadores(ArrayList<Modificador> modificadores) {
 		this.modificadores = modificadores;
 	}
 

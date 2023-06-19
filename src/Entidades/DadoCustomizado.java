@@ -1,6 +1,6 @@
 package Entidades;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +16,8 @@ public class DadoCustomizado {
 	private String nome;
     @OneToOne
 	private DadoPadrao teste;
-	private List<Modificador> modificadores;
-	private List<Resultado> resultado;
+	private ArrayList<Modificador> modificadores;
+    private ArrayList<Resultado> resultado;
 	@OneToOne
 	private Critico critico;
 	@OneToOne
@@ -26,7 +26,7 @@ public class DadoCustomizado {
     public DadoCustomizado() {
     }
 
-    public DadoCustomizado(String tipo, String nome, DadoPadrao teste, List<Modificador> modificadores, Critico critico, Dano dano) {
+    public DadoCustomizado(String tipo, String nome, DadoPadrao teste, ArrayList<Modificador> modificadores, Critico critico, Dano dano) {
         this.nome = nome;
         this.teste = teste;
         this.modificadores = modificadores;
@@ -42,11 +42,11 @@ public class DadoCustomizado {
 		this.id = id;
 	}
 
-	public List<Resultado> getResultado() {
+	public ArrayList<Resultado> getResultado() {
 		return resultado;
 	}
 
-	public void setResultado(List<Resultado> resultado) {
+	public void setResultado(ArrayList<Resultado> resultado) {
 		this.resultado = resultado;
 	}
 
@@ -82,11 +82,11 @@ public class DadoCustomizado {
 		this.teste = teste;
 	}
 
-	public List<Modificador> getModificadores() {
+	public ArrayList<Modificador> getModificadores() {
 		return modificadores;
 	}
 
-	public void setModificadores(List<Modificador> modificadores) {
+	public void setModificadores(ArrayList<Modificador> modificadores) {
 		this.modificadores = modificadores;
 	}
 

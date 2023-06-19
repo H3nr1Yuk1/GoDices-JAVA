@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import Entidades.Dano;
 
@@ -78,17 +79,31 @@ public class DanoPersistencia {
 		return null;
     }
     
-    public static List<Dano> listarDano () {
-		EntityManager manager = EntityManagerFactory.getInstance();
-		Query proq = manager.createQuery("from Dano");
+    public static List<Dano> listarDano() {
+        EntityManager manager = null;
+        try {
+            manager = EntityManagerFactory.getInstance();
+            
+            if (!manager.isOpen()) {
+                manager = EntityManagerFactory.getInstance();
+            }
+            
+            manager.getTransaction().begin();
 
-		@SuppressWarnings("unchecked")
-		List<Dano> danos = proq.getResultList();
-		
-		if(!danos.isEmpty()) {
-			return danos;
-		}
-		
-		return null;
+            TypedQuery<Dano> query = manager.createQuery("SELECT d FROM Dano d", Dano.class);
+            List<Dano> danos = query.getResultList();
+
+            manager.getTransaction().commit();
+            return danos;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (manager != null && manager.getTransaction().isActive()) {
+                manager.getTransaction().rollback();
+            }
+            return null;
+        }
     }
+
+
+
 }

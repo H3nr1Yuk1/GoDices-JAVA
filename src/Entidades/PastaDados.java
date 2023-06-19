@@ -1,6 +1,6 @@
 package Entidades;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +15,7 @@ public class PastaDados {
 	private Long id;
 	@Column(unique = true)
     private String nomePasta;
-    private List<DadoCustomizado> dadosPasta;
+    private ArrayList<DadoCustomizado> dadosPasta;
 	
     public PastaDados() {
 	}
@@ -24,7 +24,7 @@ public class PastaDados {
 		this.nomePasta = nomePasta;
 	}
     
-    public PastaDados(String nomePasta, List<DadoCustomizado> dadosPasta) {
+    public PastaDados(String nomePasta, ArrayList<DadoCustomizado> dadosPasta) {
 		this.nomePasta = nomePasta;
 		this.dadosPasta = dadosPasta;
 	}
@@ -45,11 +45,11 @@ public class PastaDados {
 		this.nomePasta = nomePasta;
 	}
 
-	public List<DadoCustomizado> getDadosPasta() {
+	public ArrayList<DadoCustomizado> getDadosPasta() {
 		return dadosPasta;
 	}
 
-	public void setDadosPasta(List<DadoCustomizado> dadosPasta) {
+	public void setDadosPasta(ArrayList<DadoCustomizado> dadosPasta) {
 		this.dadosPasta = dadosPasta;
 	}    
 }

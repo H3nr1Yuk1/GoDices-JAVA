@@ -6,7 +6,7 @@ import Persistencia.DadoCustomizadoPersistencia;
 public class DadoCustomizadoNegocios {
     public static boolean verificarDadoExistente(DadoCustomizado dadoEnviado) {    	
 
-    	if(DadoCustomizadoPersistencia.listarDadoCustomizado() == null) {
+    	if(DadoCustomizadoPersistencia.listarDadoCustomizado().equals(null)) {
     		return true;
     	} else {
     		for(DadoCustomizado listaDados : DadoCustomizadoPersistencia.listarDadoCustomizado()) {

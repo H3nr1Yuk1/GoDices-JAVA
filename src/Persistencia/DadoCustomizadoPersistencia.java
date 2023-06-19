@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import Entidades.DadoCustomizado;
 
@@ -93,18 +94,20 @@ public class DadoCustomizadoPersistencia {
 		return null;
     }
     
-    @SuppressWarnings("unchecked")
-    public static List<DadoCustomizado> listarDadoCustomizado () {
-		EntityManager manager = EntityManagerFactory.getInstance();
-		Query proq = manager.createQuery("from DadoCustomizado");
-				
-		List<DadoCustomizado> dadosCustom = proq.getResultList();
-		
-		if(!dadosCustom.isEmpty()) {
-			return dadosCustom;
-		}
-		
-		return null;
+    public static List<DadoCustomizado> listarDadoCustomizado() {
+        EntityManager manager = null;
+        try {
+            manager = EntityManagerFactory.getInstance();
+            TypedQuery<DadoCustomizado> query = manager.createQuery("SELECT dc FROM DadoCustomizado dc", DadoCustomizado.class);
+            List<DadoCustomizado> dadosCustom = query.getResultList();
+
+            return dadosCustom;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
+
+
 
 }

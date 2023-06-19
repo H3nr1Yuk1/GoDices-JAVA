@@ -1,27 +1,27 @@
 package Entidades;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@SuppressWarnings("serial")
 @Entity
-public class RolagemDano {
+public class RolagemDano implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String dadoUsado;
-	@ElementCollection
-	private List<Integer> danos;
+	private ArrayList<Integer> danos;
 	
 	public RolagemDano() {
 		
 	}
 	
-	public RolagemDano(String dadoUsado, List<Integer> danos) {
+	public RolagemDano(String dadoUsado, ArrayList<Integer> danos) {
 		this.dadoUsado = dadoUsado;
 		this.danos = danos;
 	}
@@ -40,10 +40,10 @@ public class RolagemDano {
 	public void setDadoUsado(String dadoUsado) {
 		this.dadoUsado = dadoUsado;
 	}
-	public List<Integer> getDanos() {
+	public ArrayList<Integer> getDanos() {
 		return danos;
 	}
-	public void setDanos(List<Integer> danos) {
+	public void setDanos(ArrayList<Integer> danos) {
 		this.danos = danos;
 	}
 }

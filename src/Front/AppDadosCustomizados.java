@@ -3,7 +3,6 @@ package Front;
 import java.util.ArrayList;
 
 import Entidades.Critico;
-import Entidades.Dado;
 import Entidades.DadoCustomizado;
 import Entidades.DadoDano;
 import Entidades.DadoPadrao;
@@ -66,38 +65,43 @@ public class AppDadosCustomizados {
 	
 	public static void gerarMenuCriarDado() {
 		DadoCustomizado dadoNovo = new DadoCustomizado();
+		Dano dano = new Dano();
 		DadoPadrao teste = new DadoPadrao(20);
-		DadoDano dadoDmg = new DadoDano();
-		ArrayList<Dado> dadosDano = new ArrayList<Dado>();
+		DadoDano dadoDmg;
+		ArrayList<DadoDano> dadosDano = new ArrayList<DadoDano>();
 		ArrayList<Modificador> modificadores = new ArrayList<Modificador>();
 		ArrayList<Modificador> modificadoresDano = new ArrayList<Modificador>();
-		Modificador mod = new Modificador();
-		Modificador modDano = new Modificador();
+		Modificador mod;
+		Modificador modDano;
 		Critico critico = new Critico();
-		Dano dano = new Dano();
 		System.out.println("◯------------------------------------◯");
 		dadoNovo.setNome(Console.readString("▣ Nome do dado: "));
 		teste.setQuantidade(Console.readInt("▣ Quantidade de D20: "));
 		if(DadoPadraoNegocios.verificarDadoPadrao(teste)) {
+			dadoNovo.setTeste(teste);
 			DadoPadraoPersistencia.criarDadoPadrao(teste);
 		} else {
 			teste = DadoPadraoPersistencia.procurarDadoPadrao(teste);
+			dadoNovo.setTeste(teste);
 		}
-		dadoNovo.setTeste(teste);
 		if(Console.readString("▣ Adicionar modificadores ao teste? [S/N] ").equalsIgnoreCase("S")) {
 			String respMod = "";
 			do {
 				int i = 0;
+				mod = new Modificador();
 				mod.setNome(Console.readString("▣ Nome do modificador: "));
 				mod.setValor(Console.readInt("▣ Valor do modificador: "));
 				if(i != 0) {
 					if(!modificadores.get(i).equals(mod)) {
 						if(ModificadorNegocios.verificarModificador(mod)) {
+							modificadores.add(mod);
+							dadoNovo.setModificadores(modificadores);
 							ModificadorPersistencia.criarModificador(mod);
 						} else {
 							mod = ModificadorPersistencia.procurarModificador(mod);
+							modificadores.add(mod);
+							dadoNovo.setModificadores(modificadores);
 						}
-						modificadores.add(mod);
 						System.out.println("▣ Modificador adicionado!");
 						i++;
 					} else {
@@ -105,11 +109,14 @@ public class AppDadosCustomizados {
 					}
 				} else {
 					if(ModificadorNegocios.verificarModificador(mod)) {
+						modificadores.add(mod);
+						dadoNovo.setModificadores(modificadores);
 						ModificadorPersistencia.criarModificador(mod);
 					} else {
 						mod = ModificadorPersistencia.procurarModificador(mod);
+						modificadores.add(mod);
+						dadoNovo.setModificadores(modificadores);
 					}
-					modificadores.add(mod);
 					System.out.println("▣ Modificador adicionado!");
 					i++;
 				}
@@ -119,30 +126,35 @@ public class AppDadosCustomizados {
 				}
 			} while (respMod.equalsIgnoreCase("S"));
 		}
-		dadoNovo.setModificadores(modificadores);
 		critico.setMargem(Console.readInt("▣ Margem de ameaça: "));
 		critico.setMultiplicador(Console.readInt("▣ Multiplicador (Número): X"));
 		if(CriticoNegocios.verificarCritico(critico)) {
+			dano.setCritico(critico);
+			dadoNovo.setCritico(critico);
 			CriticoPersistencia.criarCritico(critico);
 		} else {
 			critico = CriticoPersistencia.procurarCritico(critico);
+			dano.setCritico(critico);
+			dadoNovo.setCritico(critico);
 		}
-		dano.setCritico(critico);
-		dadoNovo.setCritico(critico);
 		String respDmg = "";
 		do {
 			int i = 0;
+			dadoDmg = new DadoDano();
 			dadoDmg.setFaces(Console.readInt("▣ Dado de dano (Apenas número): D"));
 			dadoDmg.setQuantidade(Console.readInt("▣ Quantidade de dados: "));
 			dadoDmg.setTipo(Console.readString("▣ Tipo de dano: "));
 			if(i != 0) {
 				if(!dadosDano.get(i).equals(dadoDmg)) {
 					if(DadoDanoNegocios.verificarDadoDano(dadoDmg)) {
+						dadosDano.add(dadoDmg);
+						dano.setDados(dadosDano);
 						DadoDanoPersistencia.criarDadoDano(dadoDmg);
 					} else {
 						dadoDmg = DadoDanoPersistencia.procurarDadoDano(dadoDmg);
+						dadosDano.add(dadoDmg);
+						dano.setDados(dadosDano);
 					}
-					dadosDano.add(dadoDmg);
 					System.out.println("▣ Dado adicionado!");
 					i++;
 				} else {
@@ -150,11 +162,14 @@ public class AppDadosCustomizados {
 				}
 			} else {
 				if(DadoDanoNegocios.verificarDadoDano(dadoDmg)) {
+					dadosDano.add(dadoDmg);
+					dano.setDados(dadosDano);
 					DadoDanoPersistencia.criarDadoDano(dadoDmg);
 				} else {
 					dadoDmg = DadoDanoPersistencia.procurarDadoDano(dadoDmg);
+					dadosDano.add(dadoDmg);
+					dano.setDados(dadosDano);
 				}
-				dadosDano.add(dadoDmg);
 				System.out.println("▣ Dado adicionado!");
 				i++;
 			}
@@ -163,22 +178,25 @@ public class AppDadosCustomizados {
 				System.out.println();
 			}
 		} while(respDmg.equalsIgnoreCase("S"));
-		dano.setDados(dadosDano);
 		respDmg = Console.readString("▣ Adicionar valor inteiro ao dano? [S/N] ");
 		if(respDmg.equalsIgnoreCase("S")) {
 			respDmg = "";
 			do {
 				int i = 0;
+				modDano = new Modificador();
 				modDano.setNome(Console.readString("▣ Nome do modificador: "));
 				modDano.setValor(Console.readInt("▣ Valor do modificador: "));
 				if(i != 0) {
 					if(!modificadoresDano.get(i).equals(modDano)) {
 						if(ModificadorNegocios.verificarModificador(modDano)) {
+							modificadoresDano.add(modDano);
+							dano.setFixos(modificadoresDano);
 							ModificadorPersistencia.criarModificador(modDano);
 						} else {
 							modDano = ModificadorPersistencia.procurarModificador(modDano);
+							modificadoresDano.add(modDano);
+							dano.setFixos(modificadoresDano);
 						}
-						modificadoresDano.add(modDano);
 						System.out.println("▣ Modificador adicionado!");
 						i++;
 					} else {
@@ -186,11 +204,14 @@ public class AppDadosCustomizados {
 					}
 				} else {
 					if(ModificadorNegocios.verificarModificador(modDano)) {
+						modificadoresDano.add(modDano);
+						dano.setFixos(modificadoresDano);
 						ModificadorPersistencia.criarModificador(modDano);
 					} else {
 						modDano = ModificadorPersistencia.procurarModificador(modDano);
+						modificadoresDano.add(modDano);
+						dano.setFixos(modificadoresDano);
 					}
-					modificadoresDano.add(modDano);
 					System.out.println("▣ Modificador adicionado!");
 					i++;
 				}
@@ -200,15 +221,14 @@ public class AppDadosCustomizados {
 				}
 			} while(respDmg.equalsIgnoreCase("S"));
 		}
-		dano.setFixos(modificadoresDano);
+		dadoNovo.setDano(dano);
 		if(DanoNegocios.verificarDano(dano)) {
 			DanoPersistencia.criarDano(dano);
 		} else {
 			dano = DanoPersistencia.procurarDano(dano);
 		}
-		dadoNovo.setDano(dano);
 		if(DadoCustomizadoNegocios.verificarDadoExistente(dadoNovo)) {
-			if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo) == true) {
+			if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo)) {
 				System.out.println("▣ Dado criado e adicionado com sucesso!");
 			} else {
 				System.out.println("◊ Houve um erro!");

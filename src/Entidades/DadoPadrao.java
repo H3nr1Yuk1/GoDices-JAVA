@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.persistence.Entity;
 
+@SuppressWarnings("serial")
 @Entity
 public class DadoPadrao extends Dado {
 

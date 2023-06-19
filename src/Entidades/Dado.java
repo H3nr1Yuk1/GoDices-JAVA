@@ -1,22 +1,23 @@
 package Entidades;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@SuppressWarnings("serial")
 @Entity
-public abstract class Dado {
+public abstract class Dado implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private int faces;
     private int quantidade;
-    @ElementCollection
-    private List<Integer> rolagens;
+    private ArrayList<Integer> rolagens;
 
     public Dado() {
     }
@@ -46,11 +47,11 @@ public abstract class Dado {
         this.quantidade = quantidade;
     }
 
-    public List<Integer> getRolagens() {
+    public ArrayList<Integer> getRolagens() {
         return rolagens;
     }
 
-    public void setRolagens(List<Integer> rolagens) {
+    public void setRolagens(ArrayList<Integer> rolagens) {
         this.rolagens = rolagens;
     }
 

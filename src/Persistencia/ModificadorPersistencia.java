@@ -52,8 +52,9 @@ public class ModificadorPersistencia {
     
     public static Modificador procurarModificador (Modificador modificador) {
 		EntityManager manager = EntityManagerFactory.getInstance();
-		Query proq = manager.createQuery("from Modificador where id = :param");
-		proq.setParameter("param", modificador.getId());
+		Query proq = manager.createQuery("from Modificador where nome = :param and valor = :param1");
+		proq.setParameter("param", modificador.getNome());
+		proq.setParameter("param1", modificador.getValor());
 
 		@SuppressWarnings("unchecked")
 		List<Modificador> modificadores = proq.getResultList();
