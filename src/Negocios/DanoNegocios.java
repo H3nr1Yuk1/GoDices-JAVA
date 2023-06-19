@@ -6,7 +6,7 @@ import Persistencia.DanoPersistencia;
 public class DanoNegocios {
 	public static boolean verificarDano(Dano danoEnviado) {
 		
-		if(DanoPersistencia.listarDano() == null) {
+		if(DanoPersistencia.listarDano().equals(null) || DanoPersistencia.listarDano().size() == 0) {
 			return true;
 		} else {
 			for(Dano danos : DanoPersistencia.listarDano()) {

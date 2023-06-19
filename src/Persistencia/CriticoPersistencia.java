@@ -51,8 +51,9 @@ public class CriticoPersistencia {
     
     public static Critico procurarCritico (Critico critico) {
 		EntityManager manager = EntityManagerFactory.getInstance();
-		Query proq = manager.createQuery("from Critico where id = :param");
-		proq.setParameter("param", critico.getId());
+		Query proq = manager.createQuery("from Critico where margem = :param and multiplicador = :param1");
+		proq.setParameter("param", critico.getMargem());
+		proq.setParameter("param1", critico.getMultiplicador());
 
 		@SuppressWarnings("unchecked")
 		List<Critico> criticos = proq.getResultList();

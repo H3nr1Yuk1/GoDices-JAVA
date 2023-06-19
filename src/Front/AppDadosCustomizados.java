@@ -8,6 +8,7 @@ import Entidades.DadoDano;
 import Entidades.DadoPadrao;
 import Entidades.Dano;
 import Entidades.Modificador;
+import Entidades.PastaDados;
 import Negocios.CriticoNegocios;
 import Negocios.DadoCustomizadoNegocios;
 import Negocios.DadoDanoNegocios;
@@ -20,10 +21,14 @@ import Persistencia.DadoDanoPersistencia;
 import Persistencia.DadoPadraoPersistencia;
 import Persistencia.DanoPersistencia;
 import Persistencia.ModificadorPersistencia;
+import Persistencia.PastaDadosPersistencia;
 
 public class AppDadosCustomizados {
 	
-	public static int iniciarAppDados() {
+	public static Long pastaUsadaId = null;
+	
+	public static int iniciarAppDados(Long id) {
+		pastaUsadaId = id;
 		int respDC = 0;
 		gerarMenuDadoCustomizado();
 		respDC = Console.readInt("▣ Ir para? ");
@@ -221,15 +226,31 @@ public class AppDadosCustomizados {
 				}
 			} while(respDmg.equalsIgnoreCase("S"));
 		}
-		dadoNovo.setDano(dano);
 		if(DanoNegocios.verificarDano(dano)) {
+			dadoNovo.setDano(dano);
 			DanoPersistencia.criarDano(dano);
 		} else {
 			dano = DanoPersistencia.procurarDano(dano);
+			dadoNovo.setDano(dano);
 		}
 		if(DadoCustomizadoNegocios.verificarDadoExistente(dadoNovo)) {
 			if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo)) {
-				System.out.println("▣ Dado criado e adicionado com sucesso!");
+				PastaDados pasta = PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId);
+				ArrayList<DadoCustomizado> dados = new ArrayList<DadoCustomizado>();
+				System.out.println(pasta.getDadosPasta());
+				if(pasta.getDadosPasta() == null) {
+					dados.add(dadoNovo);
+					pasta.setDadosPasta(dados);
+				} else {
+					pasta.getDadosPasta().add(dadoNovo);
+				}
+				System.out.println(pasta.getDadosPasta());
+				if(PastaDadosPersistencia.atualizarPastaDados(pasta)) {
+					System.out.println("▣ Dado criado e adicionado com sucesso!");
+				} else {
+					System.out.println("◊ Falha ao adicionar o dado!");
+					System.out.println("◊ Tente novamente.");
+				}
 			} else {
 				System.out.println("◊ Houve um erro!");
 				System.out.println("◊ Tente novamente.");

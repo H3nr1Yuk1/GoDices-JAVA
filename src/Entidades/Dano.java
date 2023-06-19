@@ -1,5 +1,6 @@
 package Entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,15 +9,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class Dano {
+public class Dano implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-    @OneToMany
+    @ManyToMany
 	private List<DadoDano> dados;
     private ArrayList<Modificador> fixos;
     @OneToOne

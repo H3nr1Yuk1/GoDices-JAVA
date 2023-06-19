@@ -28,6 +28,7 @@ public class PastaDadosPersistencia {
     		manager.getTransaction().begin();
     		manager.persist(pasta);   		
     		manager.getTransaction().commit();
+    		
     		return true;
     	} catch(Exception error) {
     		System.out.println(error.getMessage());
@@ -63,7 +64,7 @@ public class PastaDadosPersistencia {
 		return null;
     }
     
-    public static PastaDados procurarPastaDadosId (int id) {
+    public static PastaDados procurarPastaDadosId (Long id) {
 		EntityManager manager = EntityManagerFactory.getInstance();
 		Query proq = manager.createQuery("from PastaDados where id = :param");
 		proq.setParameter("param", id);

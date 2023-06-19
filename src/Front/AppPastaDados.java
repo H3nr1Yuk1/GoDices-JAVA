@@ -1,5 +1,6 @@
 package Front;
 
+import Entidades.DadoCustomizado;
 import Entidades.PastaDados;
 import Persistencia.PastaDadosPersistencia;
 
@@ -110,10 +111,16 @@ public class AppPastaDados {
 		if(pastaEscolhida.getDadosPasta() == null) {
 			System.out.println("\nNão há nenhum dado em sua pasta\n");
 			do {
-				AppDadosCustomizados.iniciarAppDados();
-			} while(AppDadosCustomizados.iniciarAppDados() != 4);
+				AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
+			} while(AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId()) != 4);
 		} else {
 			System.out.println("Dados : ");
+			for(DadoCustomizado dado : pastaEscolhida.getDadosPasta()) {
+				System.out.println("□ " + dado.getNome());
+			}
+			do {
+				AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
+			} while(AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId()) != 4);
 		}
 	}
 }
