@@ -106,21 +106,22 @@ public class AppPastaDados {
 	}
 	
 	public static void gerarMenuPastaDadoEscolhida(PastaDados pastaEscolhida) {
+		int respPDE = 0;
 		System.out.println("●------------------------------------●");
 		System.out.println("Pasta: " + pastaEscolhida.getNomePasta());
 		if(pastaEscolhida.getDadosPasta() == null) {
 			System.out.println("\nNão há nenhum dado em sua pasta\n");
 			do {
-				AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
-			} while(AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId()) != 4);
+				respPDE = AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
+			} while(respPDE != 4);
 		} else {
 			System.out.println("Dados : ");
 			for(DadoCustomizado dado : pastaEscolhida.getDadosPasta()) {
 				System.out.println("□ " + dado.getNome());
 			}
 			do {
-				AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
-			} while(AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId()) != 4);
+				respPDE = AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
+			} while(respPDE != 4);
 		}
 	}
 }

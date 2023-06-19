@@ -1,12 +1,14 @@
 package Entidades;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class PastaDados {
@@ -15,7 +17,8 @@ public class PastaDados {
 	private Long id;
 	@Column(unique = true)
     private String nomePasta;
-    private ArrayList<DadoCustomizado> dadosPasta;
+	@OneToMany
+    private List<DadoCustomizado> dadosPasta;
 	
     public PastaDados() {
 	}
@@ -45,11 +48,11 @@ public class PastaDados {
 		this.nomePasta = nomePasta;
 	}
 
-	public ArrayList<DadoCustomizado> getDadosPasta() {
+	public List<DadoCustomizado> getDadosPasta() {
 		return dadosPasta;
 	}
 
-	public void setDadosPasta(ArrayList<DadoCustomizado> dadosPasta) {
+	public void setDadosPasta(List<DadoCustomizado> dadosPasta) {
 		this.dadosPasta = dadosPasta;
 	}    
 }

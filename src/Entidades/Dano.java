@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @SuppressWarnings("serial")
@@ -21,7 +20,8 @@ public class Dano implements Serializable {
 	private Long id;
     @ManyToMany
 	private List<DadoDano> dados;
-    private ArrayList<Modificador> fixos;
+    @ManyToMany
+    private List<Modificador> fixos;
     @OneToOne
 	private Critico critico;
 	private ArrayList<RolagemDano> rolagemDano;
@@ -43,11 +43,11 @@ public class Dano implements Serializable {
 		this.dados = dadosDano;
 	}
 
-	public ArrayList<Modificador> getFixos() {
+	public List<Modificador> getFixos() {
 		return fixos;
 	}
 
-	public void setFixos(ArrayList<Modificador> fixos) {
+	public void setFixos(List<Modificador> fixos) {
 		this.fixos = fixos;
 	}
 		

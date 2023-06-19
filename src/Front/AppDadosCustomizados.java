@@ -236,15 +236,10 @@ public class AppDadosCustomizados {
 		if(DadoCustomizadoNegocios.verificarDadoExistente(dadoNovo)) {
 			if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo)) {
 				PastaDados pasta = PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId);
-				ArrayList<DadoCustomizado> dados = new ArrayList<DadoCustomizado>();
-				System.out.println(pasta.getDadosPasta());
 				if(pasta.getDadosPasta() == null) {
-					dados.add(dadoNovo);
-					pasta.setDadosPasta(dados);
-				} else {
-					pasta.getDadosPasta().add(dadoNovo);
+					pasta.setDadosPasta(new ArrayList<>());
 				}
-				System.out.println(pasta.getDadosPasta());
+				pasta.getDadosPasta().add(dadoNovo);
 				if(PastaDadosPersistencia.atualizarPastaDados(pasta)) {
 					System.out.println("▣ Dado criado e adicionado com sucesso!");
 				} else {

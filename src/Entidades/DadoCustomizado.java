@@ -1,22 +1,27 @@
 package Entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class DadoCustomizado {
+public class DadoCustomizado implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
     @OneToOne
 	private DadoPadrao teste;
-	private ArrayList<Modificador> modificadores;
+    @ManyToMany
+	private List<Modificador> modificadores;
     private ArrayList<Resultado> resultado;
 	@OneToOne
 	private Critico critico;
@@ -82,11 +87,11 @@ public class DadoCustomizado {
 		this.teste = teste;
 	}
 
-	public ArrayList<Modificador> getModificadores() {
+	public List<Modificador> getModificadores() {
 		return modificadores;
 	}
 
-	public void setModificadores(ArrayList<Modificador> modificadores) {
+	public void setModificadores(List<Modificador> modificadores) {
 		this.modificadores = modificadores;
 	}
 
