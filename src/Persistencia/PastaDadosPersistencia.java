@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import Entidades.DadoCustomizado;
 import Entidades.PastaDados;
 
 public class PastaDadosPersistencia {
@@ -48,6 +49,20 @@ public class PastaDadosPersistencia {
     		System.out.println(error.getMessage());
     		return false;
     	}
+    }
+    
+    public static boolean removerDadoDaPasta(PastaDados pasta, DadoCustomizado dado) {
+        try {
+            pasta.getDadosPasta().remove(dado);
+            EntityManager manager = EntityManagerFactory.getInstance();
+            manager.getTransaction().begin();
+            manager.merge(pasta);
+            manager.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
     public static PastaDados procurarPastaDados (PastaDados pasta) {
@@ -107,4 +122,5 @@ public class PastaDadosPersistencia {
     	}
     	return null;
     }
+
 }

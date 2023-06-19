@@ -56,5 +56,27 @@ public class AppFront {
         System.out.println("■ 4 - Sair");
         System.out.println("●------------------------------------●");
 	}
+	
+	public static String formatarOneUpper(String frase) {
+	    if (frase == null || frase.isEmpty()) {
+	        return frase;
+	    }
+	    
+	    String[] palavras = frase.split("\\s+");
+	    StringBuilder fraseFormatada = new StringBuilder();
+	    
+	    for (String palavra : palavras) {
+	        if (!palavra.isEmpty()) {
+	            String primeiraLetra = palavra.substring(0, 1).toUpperCase();
+	            String restantePalavra = palavra.substring(1).toLowerCase();
+	            String palavraFormatada = primeiraLetra + restantePalavra;
+	            fraseFormatada.append(palavraFormatada).append(" ");
+	        }
+	    }
+	    
+	    return fraseFormatada.toString().trim();
+	}
+
+
 
 }

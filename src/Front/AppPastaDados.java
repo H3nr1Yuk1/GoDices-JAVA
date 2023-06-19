@@ -32,7 +32,7 @@ public class AppPastaDados {
 	        	System.out.println("●------------------------------------●");
 				System.out.println("Indo para [ Criar Pasta ]");
 				PastaDados pastaNova = new PastaDados();
-				pastaNova.setNomePasta(Console.readString("▣ Qual será o nome da pasta? "));
+				pastaNova.setNomePasta(AppFront.formatarOneUpper(Console.readString("▣ Qual será o nome da pasta? ")));
 				String verifica = Console.readString("▣ Quer adicionar dados à ela? [S / N] ");
 				if(verifica.equalsIgnoreCase("S") || verifica.equalsIgnoreCase("SIM")) {
 					
@@ -93,12 +93,17 @@ public class AppPastaDados {
 	public static void gerarListaPastas() {
 		System.out.println("●------------------------------------●");
 		if(PastaDadosPersistencia.listarPastaDados() != null) {
-			int i = 1;
-			for(PastaDados listaPastas : PastaDadosPersistencia.listarPastaDados()) {
-				System.out.println("■ " + i + " - " + listaPastas.getNomePasta());
-				i++;
-			}
-			System.out.println("●------------------------------------●");
+			if(!PastaDadosPersistencia.listarPastaDados().isEmpty()) {
+				int i = 1;
+				for(PastaDados listaPastas : PastaDadosPersistencia.listarPastaDados()) {
+					System.out.println("■ " + i + " - " + listaPastas.getNomePasta());
+					i++;
+				}
+				System.out.println("●------------------------------------●");
+			} else {
+				System.out.println("◊ Não há nenhuma pasta criada!");
+				keyC1 = false;
+			}	
 		} else {
 			System.out.println("◊ Não há nenhuma pasta criada!");
 			keyC1 = false;
@@ -109,7 +114,7 @@ public class AppPastaDados {
 		int respPDE = 0;
 		System.out.println("●------------------------------------●");
 		System.out.println("Pasta: " + pastaEscolhida.getNomePasta());
-		if(pastaEscolhida.getDadosPasta() == null) {
+		if(pastaEscolhida.getDadosPasta() == null || pastaEscolhida.getDadosPasta().isEmpty()) {
 			System.out.println("\nNão há nenhum dado em sua pasta\n");
 			do {
 				respPDE = AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
@@ -118,6 +123,7 @@ public class AppPastaDados {
 			System.out.println("Dados : ");
 			for(DadoCustomizado dado : pastaEscolhida.getDadosPasta()) {
 				System.out.println("□ " + dado.getNome());
+				AppDadosCustomizados.gerarDadosDescricao(dado);
 			}
 			do {
 				respPDE = AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());

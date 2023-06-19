@@ -45,6 +45,7 @@ public class AppDadosCustomizados {
 		case 3:
 			System.out.println("◯------------------------------------◯");
 			System.out.println("Indo para [ Remover dado ]");
+			gerarMenuRemoverDado();
 			break;
 		case 4:
 			System.out.println("◯------------------------------------◯");
@@ -68,6 +69,30 @@ public class AppDadosCustomizados {
 		System.out.println("◯------------------------------------◯");
 	}
 	
+	public static void gerarDadosDescricao(DadoCustomizado dadoEnviado) {
+		System.out.print("◌ " + dadoEnviado.getTeste().getQuantidade() + "d20 ");
+		if(dadoEnviado.getModificadores() != null) {
+			if(!dadoEnviado.getModificadores().isEmpty()) {
+				for(Modificador listaMod : dadoEnviado.getModificadores()) {
+					System.out.print("+ " + listaMod.getNome() + "(" + listaMod.getValor() + ") ");
+				}
+			}
+		}
+		System.out.print("|| Dano: ");
+		for(DadoDano dadosDano : dadoEnviado.getDano().getDados()) {
+			System.out.print(dadosDano.getQuantidade() + "d" + dadosDano.getFaces() + " [" + dadosDano.getTipo() + "] ");
+		}
+		if(dadoEnviado.getDano().getFixos() != null) {
+			if(!dadoEnviado.getDano().getFixos().isEmpty()) {
+				System.out.print("+ ");
+				for(Modificador modDano : dadoEnviado.getDano().getFixos()) {
+					System.out.print(modDano.getNome() + "(" + modDano.getValor() + ") ");
+				}
+			}
+		}
+		System.out.println("|| Crítico " + dadoEnviado.getCritico().getMargem() + "/x" + dadoEnviado.getCritico().getMultiplicador());
+	}
+	
 	public static void gerarMenuCriarDado() {
 		DadoCustomizado dadoNovo = new DadoCustomizado();
 		Dano dano = new Dano();
@@ -80,7 +105,7 @@ public class AppDadosCustomizados {
 		Modificador modDano;
 		Critico critico = new Critico();
 		System.out.println("◯------------------------------------◯");
-		dadoNovo.setNome(Console.readString("▣ Nome do dado: "));
+		dadoNovo.setNome(AppFront.formatarOneUpper(Console.readString("▣ Nome do dado: ")));
 		teste.setQuantidade(Console.readInt("▣ Quantidade de D20: "));
 		if(DadoPadraoNegocios.verificarDadoPadrao(teste)) {
 			dadoNovo.setTeste(teste);
@@ -94,7 +119,7 @@ public class AppDadosCustomizados {
 			do {
 				int i = 0;
 				mod = new Modificador();
-				mod.setNome(Console.readString("▣ Nome do modificador: "));
+				mod.setNome(AppFront.formatarOneUpper(Console.readString("▣ Nome do modificador: ")));
 				mod.setValor(Console.readInt("▣ Valor do modificador: "));
 				if(i != 0) {
 					if(!modificadores.get(i).equals(mod)) {
@@ -148,7 +173,7 @@ public class AppDadosCustomizados {
 			dadoDmg = new DadoDano();
 			dadoDmg.setFaces(Console.readInt("▣ Dado de dano (Apenas número): D"));
 			dadoDmg.setQuantidade(Console.readInt("▣ Quantidade de dados: "));
-			dadoDmg.setTipo(Console.readString("▣ Tipo de dano: "));
+			dadoDmg.setTipo(AppFront.formatarOneUpper(Console.readString("▣ Tipo de dano: ")));
 			if(i != 0) {
 				if(!dadosDano.get(i).equals(dadoDmg)) {
 					if(DadoDanoNegocios.verificarDadoDano(dadoDmg)) {
@@ -189,7 +214,7 @@ public class AppDadosCustomizados {
 			do {
 				int i = 0;
 				modDano = new Modificador();
-				modDano.setNome(Console.readString("▣ Nome do modificador: "));
+				modDano.setNome(AppFront.formatarOneUpper(Console.readString("▣ Nome do modificador: ")));
 				modDano.setValor(Console.readInt("▣ Valor do modificador: "));
 				if(i != 0) {
 					if(!modificadoresDano.get(i).equals(modDano)) {
@@ -233,25 +258,69 @@ public class AppDadosCustomizados {
 			dano = DanoPersistencia.procurarDano(dano);
 			dadoNovo.setDano(dano);
 		}
+		PastaDados pasta = PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId);
 		if(DadoCustomizadoNegocios.verificarDadoExistente(dadoNovo)) {
 			if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo)) {
-				PastaDados pasta = PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId);
 				if(pasta.getDadosPasta() == null) {
 					pasta.setDadosPasta(new ArrayList<>());
 				}
 				pasta.getDadosPasta().add(dadoNovo);
 				if(PastaDadosPersistencia.atualizarPastaDados(pasta)) {
 					System.out.println("▣ Dado criado e adicionado com sucesso!");
+					AppPastaDados.gerarMenuPastaDadoEscolhida(pasta);
 				} else {
 					System.out.println("◊ Falha ao adicionar o dado!");
 					System.out.println("◊ Tente novamente.");
+					AppPastaDados.gerarMenuPastaDadoEscolhida(pasta);
 				}
 			} else {
 				System.out.println("◊ Houve um erro!");
 				System.out.println("◊ Tente novamente.");
+				AppPastaDados.gerarMenuPastaDadoEscolhida(pasta);
 			}
 		} else {
 			System.out.println("◊ Dado já existente!");
+			AppPastaDados.gerarMenuPastaDadoEscolhida(pasta);
+		}
+	}
+	
+	public static void gerarMenuListaDados() {
+		System.out.println("◯------------------------------------◯");
+		if(PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId) != null) {
+			PastaDados pastaUsada = PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId);
+			int i = 1;
+			for(DadoCustomizado dadosPasta : pastaUsada.getDadosPasta()) {
+				System.out.println("□ " + i + " - " + dadosPasta.getNome());
+				gerarDadosDescricao(dadosPasta);
+				i++;
+			}
+		}
+	}
+	
+	public static void gerarMenuRemoverDado() {
+		gerarMenuListaDados();
+		if(PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId) != null) {
+			if(PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId).getDadosPasta() != null && !PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId).getDadosPasta().isEmpty()) {
+				int dadoApagar = Console.readInt("\n▣ Remover qual dado? ");
+				PastaDados pastaUsada = PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId);
+				int i = 1;
+				for(DadoCustomizado dadoPasta : pastaUsada.getDadosPasta()) {
+					if(i == dadoApagar) {
+						if(PastaDadosPersistencia.removerDadoDaPasta(pastaUsada, dadoPasta)) {
+							System.out.println("▣ Dado removido com sucesso!");
+							AppPastaDados.gerarMenuPastaDadoEscolhida(pastaUsada);
+						} else {
+							System.out.println("◊ Falha ao remover o dado!");
+							System.out.println("◊ Tente novamente.");
+							AppPastaDados.gerarMenuPastaDadoEscolhida(pastaUsada);
+						}
+						return;
+					}
+					i++;
+				}
+			} else {
+				System.out.println("\nNão há nenhum dado nessa pasta!\n");
+			}
 		}
 	}
 }
