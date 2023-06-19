@@ -1,7 +1,11 @@
 package Front;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Entidades.DadoCustomizado;
 import Entidades.PastaDados;
+import Persistencia.DadoCustomizadoPersistencia;
 import Persistencia.PastaDadosPersistencia;
 
 public class AppPastaDados {
@@ -35,7 +39,43 @@ public class AppPastaDados {
 				pastaNova.setNomePasta(AppFront.formatarOneUpper(Console.readString("▣ Qual será o nome da pasta? ")));
 				String verifica = Console.readString("▣ Quer adicionar dados à ela? [S / N] ");
 				if(verifica.equalsIgnoreCase("S") || verifica.equalsIgnoreCase("SIM")) {
-					
+					System.out.println("●------------------------------------●");
+					if(!DadoCustomizadoPersistencia.listarDadoCustomizado().isEmpty()) {
+						int i = 1;
+						for(DadoCustomizado dadoAdicionar : DadoCustomizadoPersistencia.listarDadoCustomizado()) {
+							System.out.println("□ " + i + " - " + dadoAdicionar.getNome());
+							AppDadosCustomizados.gerarDadosDescricao(dadoAdicionar);
+							i++;
+						}
+						String respAddDado = "";
+						do{
+							int respDA = Console.readInt("▣ Qual dado adicionar? ");
+							i = 1;
+							for(DadoCustomizado dadoAdicionar : DadoCustomizadoPersistencia.listarDadoCustomizado()) {
+								if(respDA == i) {
+									pastaNova.setDadosPasta(new ArrayList<>());
+									pastaNova.getDadosPasta().add(dadoAdicionar);
+								}
+								i++;
+							}
+							respAddDado = Console.readString("▣ Deseja adicionar mais dados? [S/N]");
+						} while(respAddDado.equalsIgnoreCase("S"));
+						System.out.println("▣ Beleza!");
+						if(PastaDadosPersistencia.criarPastaDados(pastaNova) != false) {
+							System.out.println("▣ Pasta criada!");
+						} else {
+							System.out.println("◊ Houve um erro na criação da pasta.");
+							System.out.println("◊ Tente novamente.");
+						}
+					} else {
+						System.out.println("◊ Não há dados para adicionar!");
+						if(PastaDadosPersistencia.criarPastaDados(pastaNova) != false) {
+							System.out.println("▣ Pasta criada!");
+						} else {
+							System.out.println("◊ Houve um erro na criação da pasta.");
+							System.out.println("◊ Tente novamente.");
+						}
+					}
 				} else {
 					System.out.println("▣ Beleza!");
 					if(PastaDadosPersistencia.criarPastaDados(pastaNova) != false) {
