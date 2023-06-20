@@ -554,6 +554,7 @@ public class AppDadosCustomizados {
 		}
 		for(RolagemDano danoSalvar : dado.getDano().getRolagemDano()) {
 			System.out.println(danoSalvar.getDadoUsado());
+			System.out.println();
 			RolagemDanoPersistencia.criarRolagemDano(danoSalvar);	
 		}
 		ResultadoPersistencia.atualizarResultado(dado.getResultado());
