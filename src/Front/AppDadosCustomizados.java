@@ -553,8 +553,6 @@ public class AppDadosCustomizados {
 			System.out.print("\n◉ Total Final: " + totalGeral + " de dano\n");
 		}
 		for(RolagemDano danoSalvar : dado.getDano().getRolagemDano()) {
-			System.out.println(danoSalvar.getDadoUsado());
-			System.out.println();
 			RolagemDanoPersistencia.criarRolagemDano(danoSalvar);	
 		}
 		ResultadoPersistencia.atualizarResultado(dado.getResultado());
@@ -650,4 +648,6 @@ public class AppDadosCustomizados {
 			System.out.println("◊ Não há resultados!");
 		}
 	}
+	
+	
 }

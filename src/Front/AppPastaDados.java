@@ -110,6 +110,30 @@ public class AppPastaDados {
 				}
 	        	break;
 	        case 4:
+	        	int respC4 = 0;
+	        	System.out.println("●------------------------------------●");
+				System.out.println("Indo para [ Editar Pasta ]");
+				gerarListaPastas();
+				if(keyC1 == false) {
+					keyC1 = true;
+					break;
+				}
+				respC4 = Console.readInt("▣ Editar nome de qual pasta? ");
+				PastaDados pastaEditar = PastaDadosPersistencia.procurarPastaDadosIndex(respC4);
+				if(PastaDadosPersistencia.procurarPastaDados(pastaEditar) != null) {
+					pastaEditar = PastaDadosPersistencia.procurarPastaDados(pastaEditar);
+					pastaEditar.setNomePasta(Console.readString("▣ Novo nome: "));
+					if(PastaDadosPersistencia.atualizarPastaDados(pastaEditar) != false) {
+						System.out.println("▣ Pasta atualizada com sucesso!");
+					} else {
+						System.out.println("◊ Houve um erro na edição da pasta.");
+						System.out.println("◊ Tente novamente.");
+					}
+				}else {
+					System.out.println("◊ Pasta não encontrada!");
+				}
+	        	break;
+	        case 5:
 	        	System.out.println("●------------------------------------●");
 				System.out.println("Indo para [ Menu Inicial ]");
 	        	break;
@@ -119,7 +143,7 @@ public class AppPastaDados {
 				System.out.println("Selecione uma opção novamente.");
 	        	break;
 	        }
-		}while (resp != 4);
+		}while (resp != 5);
 	}
 	
 	public static void gerarMenu() {
@@ -127,7 +151,8 @@ public class AppPastaDados {
 		System.out.println("■ 1 - Acessar Pastas");
         System.out.println("■ 2 - Criar Pasta");
         System.out.println("■ 3 - Remover Pasta");
-        System.out.println("■ 4 - Voltar");
+        System.out.println("■ 4 - Editar Pasta");
+        System.out.println("■ 5 - Voltar");
         System.out.println("●------------------------------------●");
 	}
 	
