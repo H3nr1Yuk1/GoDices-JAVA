@@ -77,4 +77,23 @@ public class ResultadoPersistencia {
 		
 		return null;
     }
+    
+    public static List<Resultado> listarUltimos15DadosCustomizados() {
+    	EntityManager manager = null;
+        try {
+        	manager = EntityManagerFactory.getInstance();
+        	Query proq = manager.createQuery("from Resultado ORDER BY id DESC");
+        	
+        	@SuppressWarnings("unchecked")
+			List<Resultado> ultimosResult = proq.getResultList();
+        	
+        	if(!ultimosResult.isEmpty()) {
+        		return ultimosResult;
+        	}
+        	return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

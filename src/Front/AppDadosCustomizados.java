@@ -552,8 +552,10 @@ public class AppDadosCustomizados {
 			}
 			System.out.print("\n◉ Total Final: " + totalGeral + " de dano\n");
 		}
-		int lastI = dado.getDano().getRolagemDano().size() - 1;
-		RolagemDanoPersistencia.criarRolagemDano(dado.getDano().getRolagemDano().get(lastI));
+		for(RolagemDano danoSalvar : dado.getDano().getRolagemDano()) {
+			System.out.println(danoSalvar.getDadoUsado());
+			RolagemDanoPersistencia.criarRolagemDano(danoSalvar);	
+		}
 		ResultadoPersistencia.atualizarResultado(dado.getResultado());
 		DadoCustomizadoPersistencia.atualizarDadoCustomizado(dado);
 	}
@@ -599,5 +601,52 @@ public class AppDadosCustomizados {
 				break;
 			}
 		} while(respMD != 4);
+	}
+	
+	public static void gerarUltimasRolagens() {
+		if(ResultadoPersistencia.listarUltimos15DadosCustomizados() != null) {
+			int tamanhoLista = ResultadoPersistencia.listarUltimos15DadosCustomizados().size();
+		    int indiceInicio = Math.max(tamanhoLista - 15, 0);
+		    int indiceFim = tamanhoLista;
+		    
+			System.out.println("◯------------------------------------◯\n");
+			int i = 1;
+			int last = 0;
+			for(Resultado resultados : ResultadoPersistencia.listarUltimos15DadosCustomizados().subList(indiceInicio, indiceFim)) {
+				DadoCustomizado dadoAchado = DadoCustomizadoPersistencia.procurarDadoCustomizadoResultadoId(resultados.getId());
+				if(dadoAchado != null) {
+					System.out.println("◈ " + dadoAchado.getNome() + " || Teste: " + dadoAchado.obterValor());
+					System.out.print("◈ Dano: ");
+					int total = 0;
+					i = 0;
+					last = dadoAchado.getDano().getRolagemDano().size() - 1;
+					for(RolagemDano danoResult : dadoAchado.getDano().getRolagemDano()) {
+						for(int val : danoResult.getDanos()) {
+							total += val;
+						}
+						System.out.print(total + " " + dadoAchado.getDano().getDados().get(i).getTipo());
+						if(i != last) {
+							System.out.print(" + ");
+						}
+						i++;
+					}
+					i = 0;
+					last = dadoAchado.getDano().getFixos().size() - 1 ;
+					if(last != -1) {
+						System.out.print(" + ");
+						for(Modificador fixos : dadoAchado.getDano().getFixos()) {
+							System.out.print(fixos.getNome() + "(" + fixos.getValor() + ") ");
+						}
+						if(i != last) {
+							System.out.print(" + ");
+						}
+						i++;
+					}
+					System.out.println("\n");
+				}
+			}
+		} else {
+			System.out.println("◊ Não há resultados!");
+		}
 	}
 }

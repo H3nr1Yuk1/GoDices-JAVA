@@ -94,6 +94,21 @@ public class DadoCustomizadoPersistencia {
 		return null;
     }
     
+    public static DadoCustomizado procurarDadoCustomizadoResultadoId (Long id) {
+		EntityManager manager = EntityManagerFactory.getInstance();
+		Query proq = manager.createQuery("from DadoCustomizado where resultado_id = :param");
+		proq.setParameter("param", id);
+
+		@SuppressWarnings("unchecked")
+		List<DadoCustomizado> dadosCustom = proq.getResultList();
+		
+		if(!dadosCustom.isEmpty()) {
+			return dadosCustom.get(0);
+		}
+		
+		return null;
+    }
+    
     public static List<DadoCustomizado> listarDadoCustomizado() {
         EntityManager manager = null;
         try {
@@ -107,7 +122,5 @@ public class DadoCustomizadoPersistencia {
             return null;
         }
     }
-
-
 
 }

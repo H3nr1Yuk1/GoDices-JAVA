@@ -26,7 +26,7 @@ public class Dano implements Serializable {
     @OneToOne
 	private Critico critico;
     @OneToMany
-	private List<RolagemDano> rolagemDano;
+	private List<RolagemDano> rolagemDano = new ArrayList<RolagemDano>();
     @OneToOne
     private Resultado resultado;
 	
@@ -116,7 +116,7 @@ public class Dano implements Serializable {
                     int valor = random.nextInt(this.getDados().get(i).getFaces()) + 1;
                     danoCausado.add(valor);
                 }
-            	String nome = this.getDados().get(i).getClass().getSimpleName();
+            	String nome = "D" + this.getDados().get(i).getFaces();
             	RolagemDano dice = new RolagemDano(nome, danoCausado);
             	danoCausado = new ArrayList<Integer>();
             	this.rolagemDano.add(dice);
