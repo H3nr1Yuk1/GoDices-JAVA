@@ -35,15 +35,13 @@ public class AppFront {
 				System.out.println("●------------------------------------●");
 				System.out.println("Indo para [ Rolagens Rápidas ]");
 				break;
-			case 5:
-				break;
 			default:
 				System.out.println("●------------------------------------●");
 				System.out.println("Opção inválida!!!");
 				System.out.println("Selecione uma opção novamente.");
 				break;
 			}
-		}while(resp!=5);
+		}while(resp!=4);
 		
 		System.out.println("●------------------------------------●");
 		System.out.println("Espero que sua experiência com o");
@@ -58,8 +56,7 @@ public class AppFront {
         System.out.println("■ 1 - Minhas pastas");
         System.out.println("■ 2 - Meus dados");
         System.out.println("■ 3 - Últimas rolagens");
-        System.out.println("■ 4 - Rolagem Rápida");
-        System.out.println("■ 5 - Sair");
+        System.out.println("■ 4 - Sair");
         System.out.println("●------------------------------------●");
 	}
 	
