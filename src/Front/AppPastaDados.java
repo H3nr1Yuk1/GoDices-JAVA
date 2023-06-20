@@ -1,7 +1,6 @@
 package Front;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Entidades.DadoCustomizado;
 import Entidades.PastaDados;

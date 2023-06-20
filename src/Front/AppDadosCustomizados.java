@@ -35,21 +35,21 @@ public class AppDadosCustomizados {
 		switch(respDC) {
 		case 1:
 			System.out.println("◯------------------------------------◯");
-			System.out.println("Indo para [ Criar dado ]");
-			gerarMenuCriarDado();
+			System.out.println("Indo para [ Criar Dado ]");
+			gerarMenuCriarDado(true);
 			break;
 		case 2:
 			System.out.println("◯------------------------------------◯");
-			System.out.println("Indo para [ Rolar dado ]");
+			System.out.println("Indo para [ Rolar Dado ]");
 			break;
 		case 3:
 			System.out.println("◯------------------------------------◯");
-			System.out.println("Indo para [ Remover dado ]");
-			gerarMenuRemoverDado();
+			System.out.println("Indo para [ Remover Dado ]");
+			gerarMenuRemoverDado(true);
 			break;
 		case 4:
 			System.out.println("◯------------------------------------◯");
-			System.out.println("Indo para [ Minhas Pastas ]");
+			System.out.println("Voltando para [ Minhas Pastas ]");
 			return 4;
 		default:
 			System.out.println("◯------------------------------------◯");
@@ -79,21 +79,58 @@ public class AppDadosCustomizados {
 			}
 		}
 		System.out.print("|| Dano: ");
+		int lastIndex = dadoEnviado.getDano().getDados().size();
+		int index = 0;
 		for(DadoDano dadosDano : dadoEnviado.getDano().getDados()) {
+			index++;			
 			System.out.print(dadosDano.getQuantidade() + "d" + dadosDano.getFaces() + " [" + dadosDano.getTipo() + "] ");
+			if(index != lastIndex) {
+				System.out.print("+ ");
+			}
 		}
+		index = 0;
 		if(dadoEnviado.getDano().getFixos() != null) {
 			if(!dadoEnviado.getDano().getFixos().isEmpty()) {
 				System.out.print("+ ");
 				for(Modificador modDano : dadoEnviado.getDano().getFixos()) {
+					index++;
 					System.out.print(modDano.getNome() + "(" + modDano.getValor() + ") ");
+					if(index != lastIndex) {
+						System.out.print("+ ");
+					}
 				}
 			}
 		}
 		System.out.println("|| Crítico " + dadoEnviado.getCritico().getMargem() + "/x" + dadoEnviado.getCritico().getMultiplicador());
 	}
 	
-	public static void gerarMenuCriarDado() {
+	public static void gerarMenuListaDados(boolean pasta) {
+		System.out.println("◯------------------------------------◯");
+		if(pasta) {
+			if(PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId) != null) {
+				PastaDados pastaUsada = PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId);
+				int i = 1;
+				for(DadoCustomizado dadosPasta : pastaUsada.getDadosPasta()) {
+					System.out.println("□ " + i + " - " + dadosPasta.getNome());
+					gerarDadosDescricao(dadosPasta);
+					i++;
+				}
+			}
+		} else {
+			if(DadoCustomizadoPersistencia.listarDadoCustomizado() != null) {
+				if(!DadoCustomizadoPersistencia.listarDadoCustomizado().isEmpty()) {
+					int i = 1;
+					for(DadoCustomizado dados : DadoCustomizadoPersistencia.listarDadoCustomizado()) {
+						System.out.println("□ " + i + " - " + dados.getNome());
+						gerarDadosDescricao(dados);
+						i++;
+					}
+				}
+			}
+		}
+	}
+	
+	public static void gerarMenuCriarDado(boolean comPasta) {
 		DadoCustomizado dadoNovo = new DadoCustomizado();
 		Dano dano = new Dano();
 		DadoPadrao teste = new DadoPadrao(20);
@@ -258,47 +295,51 @@ public class AppDadosCustomizados {
 			dano = DanoPersistencia.procurarDano(dano);
 			dadoNovo.setDano(dano);
 		}
-		PastaDados pasta = PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId);
-		if(DadoCustomizadoNegocios.verificarDadoExistente(dadoNovo)) {
-			if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo)) {
-				if(pasta.getDadosPasta() == null) {
-					pasta.setDadosPasta(new ArrayList<>());
-				}
-				pasta.getDadosPasta().add(dadoNovo);
-				if(PastaDadosPersistencia.atualizarPastaDados(pasta)) {
-					System.out.println("▣ Dado criado e adicionado com sucesso!");
-					AppPastaDados.gerarMenuPastaDadoEscolhida(pasta);
+		if(comPasta) {
+			PastaDados pasta = PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId);
+			if(DadoCustomizadoNegocios.verificarDadoExistente(dadoNovo)) {
+				if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo)) {
+					if(pasta.getDadosPasta() == null) {
+						pasta.setDadosPasta(new ArrayList<>());
+					}
+					pasta.getDadosPasta().add(dadoNovo);
+					if(PastaDadosPersistencia.atualizarPastaDados(pasta)) {
+						System.out.println("▣ Dado criado e adicionado com sucesso!");
+						AppPastaDados.gerarMenuPastaDadoEscolhida(pasta);
+					} else {
+						System.out.println("◊ Falha ao adicionar o dado!");
+						System.out.println("◊ Tente novamente.");
+						AppPastaDados.gerarMenuPastaDadoEscolhida(pasta);
+					}
 				} else {
-					System.out.println("◊ Falha ao adicionar o dado!");
+					System.out.println("◊ Houve um erro!");
 					System.out.println("◊ Tente novamente.");
 					AppPastaDados.gerarMenuPastaDadoEscolhida(pasta);
 				}
 			} else {
-				System.out.println("◊ Houve um erro!");
-				System.out.println("◊ Tente novamente.");
+				System.out.println("◊ Dado já existente!");
 				AppPastaDados.gerarMenuPastaDadoEscolhida(pasta);
 			}
 		} else {
-			System.out.println("◊ Dado já existente!");
-			AppPastaDados.gerarMenuPastaDadoEscolhida(pasta);
-		}
-	}
-	
-	public static void gerarMenuListaDados() {
-		System.out.println("◯------------------------------------◯");
-		if(PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId) != null) {
-			PastaDados pastaUsada = PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId);
-			int i = 1;
-			for(DadoCustomizado dadosPasta : pastaUsada.getDadosPasta()) {
-				System.out.println("□ " + i + " - " + dadosPasta.getNome());
-				gerarDadosDescricao(dadosPasta);
-				i++;
+			if(DadoCustomizadoNegocios.verificarDadoExistente(dadoNovo)) {
+				if(DadoCustomizadoPersistencia.criarDadoCustomizado(dadoNovo)) {
+					System.out.println("▣ Dado criado com sucesso!");
+					gerarMenuMeusDados();
+				} else {
+					System.out.println("◊ Falha ao criar o dado!");
+					System.out.println("◊ Tente novamente.");
+					gerarMenuMeusDados();
+				}
+			} else {
+				System.out.println("◊ Dado já existente!");
+				gerarMenuMeusDados();
 			}
 		}
+		
 	}
 	
-	public static void gerarMenuRemoverDado() {
-		gerarMenuListaDados();
+	public static void gerarMenuRemoverDado(boolean comPasta) {
+		gerarMenuListaDados(comPasta);
 		if(PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId) != null) {
 			if(PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId).getDadosPasta() != null && !PastaDadosPersistencia.procurarPastaDadosId(pastaUsadaId).getDadosPasta().isEmpty()) {
 				int dadoApagar = Console.readInt("\n▣ Remover qual dado? ");
@@ -322,5 +363,50 @@ public class AppDadosCustomizados {
 				System.out.println("\nNão há nenhum dado nessa pasta!\n");
 			}
 		}
+	}
+	
+	public static void gerarMenuRolarDado() {
+		
+	}
+	
+	public static void gerarMenuMeusDados() {
+		if(DadoCustomizadoPersistencia.listarDadoCustomizado() != null) {
+			if(!DadoCustomizadoPersistencia.listarDadoCustomizado().isEmpty()) {
+				gerarMenuListaDados(false);
+			} else {
+				System.out.println("\nNão há nenhum dado crido!\n");
+			}
+		} else {
+			System.out.println("\nNão há nenhum dado crido!\n");
+		}
+		int respMD;
+		do {
+			gerarMenuDadoCustomizado();
+			respMD = Console.readInt("▣ Ir para? ");
+			switch(respMD) {
+			case 1:
+				System.out.println("◯------------------------------------◯");
+				System.out.println("Indo para [ Criar Dado ]");
+				gerarMenuCriarDado(false);
+				break;
+			case 2:
+				System.out.println("◯------------------------------------◯");
+				System.out.println("Indo para [ Rolar Dado ]");
+				break;
+			case 3:
+				System.out.println("◯------------------------------------◯");
+				System.out.println("Indo para [ Remover Dado ]");
+				break;
+			case 4:
+				System.out.println("◯------------------------------------◯");
+				System.out.println("Voltando para [ Menu Inicial ]");
+				break;
+			default:
+				System.out.println("◯------------------------------------◯");
+				System.out.println("Opção inválida!!!");
+				System.out.println("Selecione uma opção novamente.");
+				break;
+			}
+		} while(respMD != 4);
 	}
 }
