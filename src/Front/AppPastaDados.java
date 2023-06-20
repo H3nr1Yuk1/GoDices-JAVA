@@ -52,12 +52,14 @@ public class AppPastaDados {
 							i = 1;
 							for(DadoCustomizado dadoAdicionar : DadoCustomizadoPersistencia.listarDadoCustomizado()) {
 								if(respDA == i) {
-									pastaNova.setDadosPasta(new ArrayList<>());
+									if(pastaNova.getDadosPasta() == null) {
+										pastaNova.setDadosPasta(new ArrayList<>());
+									}
 									pastaNova.getDadosPasta().add(dadoAdicionar);
 								}
 								i++;
 							}
-							respAddDado = Console.readString("▣ Deseja adicionar mais dados? [S/N]");
+							respAddDado = Console.readString("▣ Deseja adicionar mais dados? [S/N] ");
 						} while(respAddDado.equalsIgnoreCase("S"));
 						System.out.println("▣ Beleza!");
 						if(PastaDadosPersistencia.criarPastaDados(pastaNova) != false) {
@@ -150,23 +152,18 @@ public class AppPastaDados {
 	}
 	
 	public static void gerarMenuPastaDadoEscolhida(PastaDados pastaEscolhida) {
-		int respPDE = 0;
 		System.out.println("●------------------------------------●");
 		System.out.println("Pasta: " + pastaEscolhida.getNomePasta());
 		if(pastaEscolhida.getDadosPasta() == null || pastaEscolhida.getDadosPasta().isEmpty()) {
 			System.out.println("\nNão há nenhum dado em sua pasta\n");
-			do {
-				respPDE = AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
-			} while(respPDE != 4);
+			AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
 		} else {
 			System.out.println("Dados : ");
 			for(DadoCustomizado dado : pastaEscolhida.getDadosPasta()) {
 				System.out.println("□ " + dado.getNome());
 				AppDadosCustomizados.gerarDadosDescricao(dado);
 			}
-			do {
-				respPDE = AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
-			} while(respPDE != 4);
+			AppDadosCustomizados.iniciarAppDados(pastaEscolhida.getId());
 		}
 	}
 }

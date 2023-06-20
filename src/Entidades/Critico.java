@@ -18,6 +18,8 @@ public class Critico implements Serializable {
     private int multiplicador;
     @OneToOne
     private Dano dano;
+    @OneToOne
+    private Resultado resultado;
 	
     public Critico() {
 	}

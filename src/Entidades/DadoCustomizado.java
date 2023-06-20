@@ -18,15 +18,16 @@ public class DadoCustomizado implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-    @OneToOne
-	private DadoPadrao teste;
+	@OneToOne
+    private DadoPadrao teste;
     @ManyToMany
-	private List<Modificador> modificadores;
-    private ArrayList<Resultado> resultado;
-	@OneToOne
-	private Critico critico;
-	@OneToOne
-	private Dano dano;
+    private List<Modificador> modificadores = new ArrayList<>();
+    @OneToOne
+    private Resultado resultado = new Resultado();
+    @OneToOne
+    private Critico critico;
+    @OneToOne
+    private Dano dano;
 
     public DadoCustomizado() {
     }
@@ -47,11 +48,11 @@ public class DadoCustomizado implements Serializable {
 		this.id = id;
 	}
 
-	public ArrayList<Resultado> getResultado() {
+	public Resultado getResultado() {
 		return resultado;
 	}
 
-	public void setResultado(ArrayList<Resultado> resultado) {
+	public void setResultado(Resultado resultado) {
 		this.resultado = resultado;
 	}
 
@@ -95,35 +96,31 @@ public class DadoCustomizado implements Serializable {
 		this.modificadores = modificadores;
 	}
 
-	public int rolarDado(){
-		if(this.teste.getQuantidade() <= 0){
-            int escolhido = 20;
-            this.teste.rolarDado();
-            for(int i = 0; i < this.teste.getRolagens().size(); i++){
-                if(this.teste.getRolagens().get(i) < escolhido){
-                    escolhido = this.teste.getRolagens().get(i);
-                }
-            }
-            Resultado ultimoResultado = new Resultado(escolhido, this.modificadores, this.critico, this.dano);
-            this.resultado.add(ultimoResultado);
-            return ultimoResultado.gerarResultado();
-        } else {
-            int escolhido = 0;
-            this.teste.rolarDado();
-            for(int i = 0; i < this.teste.getRolagens().size(); i++){
-                if(this.teste.getRolagens().get(i) > escolhido){
-                    escolhido = this.teste.getRolagens().get(i);
-                }
-            }
-            Resultado ultimoResultado = new Resultado(escolhido, this.modificadores, this.critico, this.dano);
-            this.resultado.add(ultimoResultado);
-            return ultimoResultado.gerarResultado();
-        }
+	public int rolarDado() {
+	    if (this.teste.getQuantidade() <= 0) {
+	        int escolhido = 20;
+	        this.teste.rolarDado();
+	        for (int i = 0; i < this.teste.getRolagens().size(); i++) {
+	            if (this.teste.getRolagens().get(i) < escolhido) {
+	                escolhido = this.teste.getRolagens().get(i);
+	            }
+	        }
+	        this.resultado.setValorEscolhido(escolhido);
+	        return this.resultado.gerarResultado();
+	    } else {
+	        int escolhido = 0;
+	        this.teste.rolarDado();
+	        for (int i = 0; i < this.teste.getRolagens().size(); i++) {
+	            if (this.teste.getRolagens().get(i) > escolhido) {
+	                escolhido = this.teste.getRolagens().get(i);
+	            }
+	        }
+	        this.resultado.setValorEscolhido(escolhido);
+	        return this.resultado.gerarResultado();
+	    }
 	}
 
     public int obterValor(){
-    	int num = this.resultado.size() - 1;
-    	Resultado ultimoResultado = this.resultado.get(num);
-    	return ultimoResultado.gerarResultado();
+    	return this.resultado.gerarResultado();
     }
 }

@@ -64,7 +64,7 @@ public class DadoCustomizadoPersistencia {
 		return null;
     }
     
-    public static DadoCustomizado procurarDadoCustomizadoId (int id) {
+    public static DadoCustomizado procurarDadoCustomizadoId (Long id) {
 		EntityManager manager = EntityManagerFactory.getInstance();
 		Query proq = manager.createQuery("from DadoCustomizado where id = :param");
 		proq.setParameter("param", id);

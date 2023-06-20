@@ -1,53 +1,42 @@
 package Entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Resultado {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private int valorEscolhido;
-	@OneToMany
-	private List<Modificador> modificadores;
-    @OneToOne
-	private Critico critico;
-    @OneToOne
-    private Dano dano;
-    
-    public Resultado() {
-    }
-
-    public Resultado(int valorEscolhido, List<Modificador> modificadores2, Critico critico, Dano dano) {
-        this.valorEscolhido = valorEscolhido;
-        this.modificadores = modificadores2;
-        this.critico = critico;
-        this.dano = dano;
-    }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private int valorEscolhido;
+    @ManyToMany
+    private List<Modificador> modificadores;
         
-    public Long getId() {
-		return id;
+	public Resultado() {
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	
+	public Resultado(int valorEscolhido) {
+		this.valorEscolhido = valorEscolhido;
+	}
+		
+	public Resultado(int valorEscolhido, List<Modificador> modificadores) {
+		this.valorEscolhido = valorEscolhido;
+		this.modificadores = modificadores;
 	}
 
 	public int getValorEscolhido() {
 		return valorEscolhido;
 	}
-
 	public void setValorEscolhido(int valorEscolhido) {
 		this.valorEscolhido = valorEscolhido;
 	}
-
+			
 	public List<Modificador> getModificadores() {
 		return modificadores;
 	}
@@ -56,35 +45,23 @@ public class Resultado {
 		this.modificadores = modificadores;
 	}
 
-	public Critico getCritico() {
-		return critico;
+	public Long getId() {
+		return id;
 	}
 
-	public void setCritico(Critico critico) {
-		this.critico = critico;
-	}
-	
-	public Dano getDano() {
-		return dano;
-	}
-
-	public void setDano(Dano dano) {
-		this.dano = dano;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public int gerarResultado() {
-		int valor = 0;
-        valor = valor + this.valorEscolhido;
+		int valor = this.valorEscolhido;
+		if(this.modificadores == null) {
+			this.modificadores = new ArrayList<Modificador>();
+		}
         for(int i = 0; i < this.modificadores.size(); i++){
-            valor = valor + modificadores.get(i).getValor();
+            valor = valor + this.modificadores.get(i).getValor();
         }
         return valor;
 	}
-	
-	public boolean verificarCritico() {
-		if(this.valorEscolhido >= this.critico.getMargem()) {
-			return true;
-		}
-		return false;
-	}
+    
 }

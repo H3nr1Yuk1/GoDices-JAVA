@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @SuppressWarnings("serial")
@@ -24,7 +25,10 @@ public class Dano implements Serializable {
     private List<Modificador> fixos;
     @OneToOne
 	private Critico critico;
-	private ArrayList<RolagemDano> rolagemDano;
+    @OneToMany
+	private List<RolagemDano> rolagemDano;
+    @OneToOne
+    private Resultado resultado;
 	
     public Dano() {
 	}
@@ -63,7 +67,7 @@ public class Dano implements Serializable {
 		return rolagemDano;
 	}
 
-	public void setRolagemDano(ArrayList<RolagemDano> rolagemDano) {
+	public void setRolagemDano(List<RolagemDano> rolagemDano) {
 		this.rolagemDano = rolagemDano;
 	}
 	
@@ -75,7 +79,7 @@ public class Dano implements Serializable {
 		this.id = id;
 	}
 
-	public ArrayList<RolagemDano> rolarDano(){
+	public List<RolagemDano> rolarDano(){
 		this.rolagemDano = new ArrayList<RolagemDano>();
 		ArrayList<Integer> danoCausado = new ArrayList<Integer>();
         Random random = new Random();
@@ -85,7 +89,7 @@ public class Dano implements Serializable {
                 int valor = random.nextInt(this.getDados().get(i).getFaces()) + 1;
                 danoCausado.add(valor);
             }
-        	String nome = this.getDados().get(i).getClass().getSimpleName();
+        	String nome = "D" + this.getDados().get(i).getFaces();
         	RolagemDano dice = new RolagemDano(nome, danoCausado);
         	danoCausado = new ArrayList<Integer>();
         	this.rolagemDano.add(dice);
@@ -93,20 +97,30 @@ public class Dano implements Serializable {
         return this.rolagemDano;
 	}
     
-	public ArrayList<RolagemDano> rolarDanoCritico(){
+	public List<RolagemDano> rolarDanoCritico(){
 		rolagemDano = new ArrayList<RolagemDano>();
 		ArrayList<Integer> danoCausado = new ArrayList<Integer>();
         Random random = new Random();
-        
         for(int i = 0; i < this.getDados().size(); i++) {
-        	for(int j = 0; j < (this.getDados().get(i).getQuantidade() * this.critico.getMultiplicador()); j++){
-                int valor = random.nextInt(this.getDados().get(i).getFaces()) + 1;
-                danoCausado.add(valor);
-            }
-        	String nome = this.getDados().get(i).getClass().getSimpleName();
-        	RolagemDano dice = new RolagemDano(nome, danoCausado);
-        	danoCausado = new ArrayList<Integer>();
-        	this.rolagemDano.add(dice);
+        	if(this.getDados().get(i).getTipo().equalsIgnoreCase("Morte") || this.getDados().get(i).getTipo().equalsIgnoreCase("Energia") || this.getDados().get(i).getTipo().equalsIgnoreCase("Sangue") || this.getDados().get(i).getTipo().equalsIgnoreCase("Conhecimento") || this.getDados().get(i).getTipo().equalsIgnoreCase("Medo")) {
+        		for(int j = 0; j < this.getDados().get(i).getQuantidade(); j++){
+                    int valor = random.nextInt(this.getDados().get(i).getFaces()) + 1;
+                    danoCausado.add(valor);
+                }
+            	String nome = "D" + this.getDados().get(i).getFaces();
+            	RolagemDano dice = new RolagemDano(nome, danoCausado);
+            	danoCausado = new ArrayList<Integer>();
+            	this.rolagemDano.add(dice);
+        	} else {
+        		for(int j = 0; j < (this.getDados().get(i).getQuantidade() * this.critico.getMultiplicador()); j++){
+                    int valor = random.nextInt(this.getDados().get(i).getFaces()) + 1;
+                    danoCausado.add(valor);
+                }
+            	String nome = this.getDados().get(i).getClass().getSimpleName();
+            	RolagemDano dice = new RolagemDano(nome, danoCausado);
+            	danoCausado = new ArrayList<Integer>();
+            	this.rolagemDano.add(dice);
+        	}
         }
         return this.rolagemDano;
 	}

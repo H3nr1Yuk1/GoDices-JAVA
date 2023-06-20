@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import Entidades.Resultado;
 
 public class ResultadoPersistencia {
-	public static boolean criarResultadoTeste (Resultado resultado) {
+	public static boolean criarResultado (Resultado resultado) {
     	try {
     		EntityManager manager = EntityManagerFactory.getInstance();
     		manager.getTransaction().begin();
@@ -22,7 +22,7 @@ public class ResultadoPersistencia {
     	}
     }
     
-    public static boolean atualizarResultadoTeste (Resultado resultado) {
+    public static boolean atualizarResultado (Resultado resultado) {
     	try {
     		EntityManager manager = EntityManagerFactory.getInstance();
     		manager.getTransaction().begin();
@@ -35,7 +35,7 @@ public class ResultadoPersistencia {
     	}
     }
     
-    public static boolean removerResultadoTeste (Resultado resultado) {
+    public static boolean removerResultado (Resultado resultado) {
     	try {
     		EntityManager manager = EntityManagerFactory.getInstance();
     		manager.getTransaction().begin();
@@ -49,9 +49,9 @@ public class ResultadoPersistencia {
     	}
     }
     
-    public static Resultado procurarResultadoTeste (Resultado resultado) {
+    public static Resultado procurarResultado (Resultado resultado) {
 		EntityManager manager = EntityManagerFactory.getInstance();
-		Query proq = manager.createQuery("from RolagemDano where id = :param");
+		Query proq = manager.createQuery("from Resultado where id = :param");
 		proq.setParameter("param", resultado.getId());
 
 		@SuppressWarnings("unchecked")
@@ -63,9 +63,9 @@ public class ResultadoPersistencia {
 		return null;
     }
     
-    public static Resultado procurarRolagemDano (int id) {
+    public static Resultado procurarResultadoId (Long id) {
 		EntityManager manager = EntityManagerFactory.getInstance();
-		Query proq = manager.createQuery("from RolagemDano where id = :param");
+		Query proq = manager.createQuery("from Resultado where id = :param");
 		proq.setParameter("param", id);
 
 		@SuppressWarnings("unchecked")
